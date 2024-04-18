@@ -11,6 +11,7 @@ import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { AlignJustify } from 'lucide-react';
+import { config } from '@/config/site'
 
 export function MobileNav() {
    const [open, setOpen] = useState(false)
@@ -33,7 +34,7 @@ export function MobileNav() {
                onOpenChange={setOpen}
             >
                <div className="relative z-20 flex items-center text-lg font-medium text-white">
-                  Petlify
+                  {config.name}
                </div>
             </MobileLink>
             <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">

@@ -9,6 +9,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { config } from "@/config/site";
 // import config from '@/config/site'
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -20,7 +21,7 @@ export function MainNav() {
     <div className="hidden md:flex gap-4">
       <Link href="/" className="flex items-center">
         <span className="hidden  text-white font-medium sm:inline-block">
-          Petlify
+          {config.name}
         </span>
       </Link>
       <NavMenu />
