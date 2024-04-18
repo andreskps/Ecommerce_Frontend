@@ -1,6 +1,6 @@
 
 import Footer from "@/components/native/Footer"
-import Header from "@/components/parent"
+import Header from "@/components/native/nav/parent"
 
 export default async function DashboardLayout({
    children,
