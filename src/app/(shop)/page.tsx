@@ -1,8 +1,9 @@
 import { CarouselDemo } from "@/components/corousel";
 import Carousel from "@/components/corouselMain";
+import { SectionCategories } from "@/components/home/sections/SectionCategories";
+import { SectionProducts } from "@/components/home/sections/SectionProducts";
 import { Nav } from "@/components/nav";
 import Header from "@/components/parent";
-import SectionMain from "@/components/section";
 import Image from "next/image";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -17,7 +18,8 @@ export default function Home() {
            Encuentra los mejores productos para tu mascota
         </p>
       </div>
-      <SectionMain />
+      <SectionCategories />
+      <SectionProducts/>
     </div>
   );
 }
