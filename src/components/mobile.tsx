@@ -10,6 +10,7 @@ import { ViewIcon } from 'lucide-react'
 import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { AlignJustify } from 'lucide-react';
 
 export function MobileNav() {
    const [open, setOpen] = useState(false)
@@ -21,29 +22,17 @@ export function MobileNav() {
                variant="ghost"
                className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
             >
-               <ViewIcon className="h-5" />
+               <AlignJustify className='text-white'/>
                <span className="sr-only">Toggle Menu</span>
             </Button>
          </SheetTrigger>
-         <SheetContent side="left" className="pr-0">
+         <SheetContent side="left" className="pr-0 bg-primario">
             <MobileLink
                href="/"
                className="flex items-center"
                onOpenChange={setOpen}
             >
-               <div className="relative z-20 flex items-center text-lg font-medium">
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     strokeWidth="2"
-                     strokeLinecap="round"
-                     strokeLinejoin="round"
-                     className="mr-2 h-6 w-6"
-                  >
-                     <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-                  </svg>
+               <div className="relative z-20 flex items-center text-lg font-medium text-white">
                   Petlify
                </div>
             </MobileLink>
@@ -56,6 +45,7 @@ export function MobileNav() {
                               key={item.href}
                               href={item.href}
                               onOpenChange={setOpen}
+                              className='text-white'
                            >
                               {item.title}
                            </MobileLink>
@@ -65,7 +55,7 @@ export function MobileNav() {
                <div className="flex flex-col space-y-2">
                   {docsConfig.sidebarNav.map((item, index) => (
                      <div key={index} className="flex flex-col space-y-3 pt-6">
-                        <h4 className="font-medium">{item.title}</h4>
+                        <h4 className="font-medium text-white">{item.title}</h4>
                      </div>
                   ))}
                </div>
