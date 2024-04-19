@@ -7,34 +7,34 @@ import {
 import Link from "next/link";
 import React, { useCallback } from "react";
 import { useRouter,usePathname,useSearchParams } from 'next/navigation';
+import { Category } from "@/app/interface/categories/Categories.interface";
 interface Props {
-  categories: {
-    name: string;
-    subcategories: string[];
-  }[];
+  categories: Category[]
 }
 
 export const Categories = ({ categories }: Props) => {
+
+
   return (
     <div className="space-y-2 ">
       <h3 className="text-lg font-semibold">Categorías</h3>
       <div className="grid gap-2">
         {categories.map((category, i) => (
-          <Category key={i} category={category} />
+          <CategoryItem key={category.id} category={category} />
         ))}
       </div>
     </div>
   );
 };
 
-type CategoryProps = {
-  category: {
-    name: string;
-    subcategories: string[];
-  };
-};
 
-export const Category = ({ category }: CategoryProps) => {
+
+interface CategoryItemProps {
+  category: Category;
+
+}
+
+export const CategoryItem = ({ category }:CategoryItemProps ) => {
 
   const pathname = usePathname()
   const router = useRouter()
@@ -61,12 +61,12 @@ export const Category = ({ category }: CategoryProps) => {
         <div className="grid gap-2 pl-4">
           {category.subcategories.map((subcategory, j) => (
             <Link
-              key={j}
-              href={pathname + '?' + createQueryString('subcategory', subcategory)}
+              key={subcategory.id}
+              href={pathname + '?' + createQueryString('subcategory', subcategory.name)}
               passHref
               className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >
-                {subcategory}
+              {subcategory.name}
             </Link>
           ))}
         </div>

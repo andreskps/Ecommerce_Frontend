@@ -1,4 +1,7 @@
-import { Product, ProductsResponse } from "@/app/interface/products/ProductsResponse";
+import {
+  Product,
+  ProductsResponse,
+} from "@/app/interface/products/ProductsResponse";
 import { ProductsByPet } from "@/components/component/products";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -47,7 +50,7 @@ const products = [
 
 export default async function PetPage({ params, searchParams }: Props) {
   const { pet } = params;
-  const { subcategory } = searchParams;
+  const { subcategory = "" , brand = "" } = searchParams;
 
   const selectedPet = pets.find((p) => p.name === pet);
 
@@ -56,7 +59,7 @@ export default async function PetPage({ params, searchParams }: Props) {
   }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products/byPet/${selectedPet.name}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products/byPet/${selectedPet.name}?subcategory=${subcategory}&brand=${brand}`,
     {
       method: "GET",
       cache: "no-cache",
@@ -71,6 +74,7 @@ export default async function PetPage({ params, searchParams }: Props) {
     <Suspense fallback={<div>Loading...</div>}>
       <ProductsByPet
         products={data}
+        subcategory={subcategory as string}
         title={selectedPet.title}
         description={selectedPet.description}
       />

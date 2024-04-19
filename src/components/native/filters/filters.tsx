@@ -1,11 +1,13 @@
 "use client"
 
+import { Brand } from "@/app/interface/brands/Brands.interface";
 import {
   AccordionTrigger,
   AccordionContent,
   AccordionItem,
   Accordion,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
   SelectValue,
@@ -17,7 +19,12 @@ import {
 import { usePathname ,useRouter,useSearchParams} from "next/navigation";
 import { useCallback } from "react";
 
-export const Filters = () => {
+
+interface Props {
+  brands:Brand[]
+}
+
+export const Filters = ({brands}:Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,6 +42,10 @@ export const Filters = () => {
 
   const handleFilter = (value: string) => {
     router.push(pathname + '?' + createQueryString('filter', value));
+  }
+
+  const handleBrand = (value: string) => {
+    router.push(pathname + '?' + createQueryString('brand', value));
   }
 
 
@@ -81,8 +92,27 @@ export const Filters = () => {
                   <SelectItem value="sale">En Oferta</SelectItem>
                   <SelectItem value="featured">Destacados</SelectItem>
                 </SelectContent>
+              </Select>        
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="brand">Marca:</Label>
+              <Select
+                onValueChange={handleBrand}
+                defaultValue="all">
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Seleccionar" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  {brands.map((brand, i) => (
+                    <SelectItem key={i} value={brand.name}>
+                      {brand.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
               </Select>
             </div>
+
           </div>
         </AccordionContent>
       </AccordionItem>
