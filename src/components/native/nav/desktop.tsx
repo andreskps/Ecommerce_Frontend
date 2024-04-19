@@ -34,16 +34,16 @@ export function NavMenu() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/products" legacyBehavior passHref>
+          <Link href="/pet/perro" legacyBehavior passHref>
             <NavigationMenuLink className=" inline-flex rounded-sm h-10 w-max items-center justify-center text-sm font-medium px-4 py-2 text-white hover:bg-white hover:text-black">
-              <div className="font-medium">Products</div>
+              <div className="font-medium">Dogs</div>
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/products" legacyBehavior passHref>
+          <Link href="/pet/gato" legacyBehavior passHref>
             <NavigationMenuLink className=" inline-flex  rounded-sm h-10 w-max items-center justify-center text-sm font-medium px-4 py-2 text-white hover:bg-white hover:text-black">
-              <div className="font-medium">Products</div>
+              <div className="font-medium">Cats</div>
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

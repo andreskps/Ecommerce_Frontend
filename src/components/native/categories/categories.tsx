@@ -1,11 +1,12 @@
+"use client"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Link from "next/link";
-import React from "react";
-
+import React, { useCallback } from "react";
+import { useRouter,usePathname,useSearchParams } from 'next/navigation';
 interface Props {
   categories: {
     name: string;
@@ -34,6 +35,22 @@ type CategoryProps = {
 };
 
 export const Category = ({ category }: CategoryProps) => {
+
+  const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+ 
+      return params.toString()
+    },
+    [searchParams]
+  )
+
   return (
     <Collapsible>
       <CollapsibleTrigger className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900">
@@ -45,7 +62,7 @@ export const Category = ({ category }: CategoryProps) => {
           {category.subcategories.map((subcategory, j) => (
             <Link
               key={j}
-              href={`/products?category=${category.name}&subcategory=${subcategory}`}
+              href={pathname + '?' + createQueryString('subcategory', subcategory)}
               passHref
               className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >

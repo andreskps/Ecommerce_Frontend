@@ -24,6 +24,7 @@ To read more about using these font, please visit the Next.js documentation:
 - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
 **/
 
+import { Product, ProductsResponse } from "@/app/interface/products/ProductsResponse";
 import { Categories } from "../native/categories/categories";
 import { Filters } from "../native/filters/filters";
 import ProductsList from "../native/products/productsList";
@@ -34,30 +35,16 @@ import { PaginationProducts } from './pagination';
 interface Props {
    title: string;
    description: string;
+   products: Product[];
 
 }
 
 
 
 
-export function ProductsByPet({title,description}:Props) {
-  const products = [
-    {
-      name: "Producto 1",
-      price: "$19.99",
-      description: "Descripción del Producto",
-      image:
-        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713359989/products/vsririqv6aldivisv814.jpg",
-      link: "#",
-    },
-    {
-      name: "Producto 3",
-      price: "$14.99",
-      description: "Descripción del Producto",
-      image: "/placeholder.svg",
-      link: "#",
-    },
-  ];
+export function ProductsByPet({title,description,products}:Props) {
+
+  
 
   const categories = [
     {

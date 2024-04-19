@@ -1,3 +1,5 @@
+"use client"
+
 import {
   AccordionTrigger,
   AccordionContent,
@@ -12,8 +14,35 @@ import {
   SelectContent,
   Select,
 } from "@/components/ui/select";
+import { usePathname ,useRouter,useSearchParams} from "next/navigation";
+import { useCallback } from "react";
 
 export const Filters = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+ 
+      return params.toString()
+    },
+    [searchParams]
+  )
+
+  const handleFilter = (value: string) => {
+    router.push(pathname + '?' + createQueryString('filter', value));
+  }
+
+
+
+  const handleSort = (value: string) => {
+    router.push(pathname + '?' + createQueryString('sort', value));
+  };
+
   return (
     <Accordion className="w-full" collapsible type="single">
       <AccordionItem value="filter">
@@ -22,7 +51,7 @@ export const Filters = () => {
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="sort">Ordenar por:</Label>
-              <Select defaultValue="featured">
+              <Select defaultValue="featured" onValueChange={handleSort}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -40,7 +69,9 @@ export const Filters = () => {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="filter">Filtrar por:</Label>
-              <Select defaultValue="all">
+              <Select
+                onValueChange={handleFilter}
+               defaultValue="all">
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
