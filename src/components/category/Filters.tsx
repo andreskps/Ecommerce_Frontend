@@ -75,12 +75,12 @@ export const Filters = ({ categories, subcategories }: Props) => {
         <div className="grid gap-4">
           <div className="grid gap-2">
             <Label>Mascota</Label>
-            <Select onValueChange={handlePet} defaultValue="todos">
+            <Select onValueChange={handlePet} defaultValue="all">
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Seleccionar" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todas</SelectItem>
+                <SelectItem value="all">Todas</SelectItem>
                 <SelectItem value="perro">Perro</SelectItem>
                 <SelectItem value="gato">Gato</SelectItem>
               </SelectContent>
@@ -89,12 +89,12 @@ export const Filters = ({ categories, subcategories }: Props) => {
 
           <div className="grid gap-2">
             <Label>SubCategoria</Label>
-            <Select onValueChange={handleSubcategory} defaultValue="todos">
+            <Select onValueChange={handleSubcategory} defaultValue="all">
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Seleccionar" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todas</SelectItem>
+                <SelectItem value="all">Todas</SelectItem>
                 {subcategories.map((subcategory, i) => (
                   <SelectItem key={subcategory.id} value={subcategory.name}>
                     {subcategory.name}
