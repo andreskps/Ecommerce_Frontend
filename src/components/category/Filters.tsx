@@ -55,7 +55,7 @@ export const Filters = ({ categories, subcategories }: Props) => {
         <div className="grid gap-2">
           {categories.map((category, i) => {
             const isActive =
-              pathname === `/category/${category.name.toLowerCase()}`;
+              pathname === `/category/${category.name}`;
             return (
               <Link
                 key={category.id}
