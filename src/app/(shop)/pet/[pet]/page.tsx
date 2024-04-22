@@ -68,8 +68,6 @@ export default async function PetPage({ params, searchParams }: Props) {
 
   const data: Product[] = await response.json();
 
-  console.log(data);
-
   return (
    
       <Suspense fallback={<div>Loading...</div>}>

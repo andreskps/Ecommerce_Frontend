@@ -13,28 +13,28 @@ export  function SectionCategories() {
       description: "Encuentra el alimento ideal para tu mascota.",
       image:
         "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713447093/banners/hqisyktgd8uuhvtppwwg.png",
-      link: "#",
+      link:"/category/alimentos"
     },
     {
       title: "Juguetes",
       description: "Descubre la diversión para tu mascota.",
       image:
         "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713447093/banners/axnotn1etfrvhku9y6zb.png",
-      link: "#",
+      link: "/category/juguetes",
     },
     {
       title: "Accesorios",
       description: "Encuentra los mejores accesorios para tu mascota.",
       image:
         "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713448667/banners/fp7i11l3lmt0jskondge.png",
-      link: "#",
+      link: "/category/accesorios",
     },
     {
       title: "Higiene",
       description: "Productos para la higiene de tu mascota.",
       image:
         "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713448963/banners/eboaqialykdngbfugeov.png",
-      link: "#",
+      link: "/category/higiene",
     },
     // {
     //   title: "Ofertas",
