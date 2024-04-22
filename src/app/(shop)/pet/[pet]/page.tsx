@@ -50,7 +50,7 @@ const products = [
 
 export default async function PetPage({ params, searchParams }: Props) {
   const { pet } = params;
-  const { subcategory = "" , brand = "" } = searchParams;
+  const { subcategory = "", brand = "" } = searchParams;
 
   const selectedPet = pets.find((p) => p.name === pet);
 
@@ -71,13 +71,15 @@ export default async function PetPage({ params, searchParams }: Props) {
   console.log(data);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ProductsByPet
-        products={data}
-        subcategory={subcategory as string}
-        title={selectedPet.title}
-        description={selectedPet.description}
-      />
-    </Suspense>
+   
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProductsByPet
+          products={data}
+          subcategory={subcategory as string}
+          title={selectedPet.title}
+          description={selectedPet.description}
+        />
+      </Suspense>
+   
   );
 }

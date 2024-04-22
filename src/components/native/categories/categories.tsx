@@ -8,6 +8,7 @@ import Link from "next/link";
 import React, { useCallback } from "react";
 import { useRouter,usePathname,useSearchParams } from 'next/navigation';
 import { Category } from "@/app/interface/categories/Categories.interface";
+import { ChevronRightIcon } from "lucide-react";
 interface Props {
   categories: Category[]
 }
@@ -55,7 +56,7 @@ export const CategoryItem = ({ category }:CategoryItemProps ) => {
     <Collapsible>
       <CollapsibleTrigger className="flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900">
         {category.name}
-        {/* <ChevronRightIcon className="h-4 w-4" /> */}
+        <ChevronRightIcon className="h-4 w-4" />
       </CollapsibleTrigger>
       <CollapsibleContent className="mt-2">
         <div className="grid gap-2 pl-4">
