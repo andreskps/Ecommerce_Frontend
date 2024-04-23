@@ -6,6 +6,9 @@ const nextConfig = {
             protocol: 'https',
             hostname: 'picsum.photos',
           },{
+            protocol: 'http',
+            hostname: 'res.cloudinary.com'
+          },{
             protocol: 'https',
             hostname: 'res.cloudinary.com'
           }

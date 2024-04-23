@@ -25,9 +25,8 @@ interface Props {
 
 export default async function CategoryPage({ params, searchParams }: Props) {
   const { slug } = params;
-  
-  const {subcategory ="", pet=""} = searchParams;
 
+  const { subcategory = "", pet = "" } = searchParams;
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/categories`
@@ -50,11 +49,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     }
   );
 
-  
-
   const products = await responseProduct.json();
-
- 
 
   return (
     <div className="container mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 px-4 md:px-6 py-12 md:py-24">
