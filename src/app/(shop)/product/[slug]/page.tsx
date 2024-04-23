@@ -1,4 +1,5 @@
 import SectionProduct from "@/components/component/sectionProduct";
+import { getProductsBySlug } from "@/lib/api/productsApi";
 
 interface Props {
   params: {
@@ -9,17 +10,7 @@ interface Props {
 export default async function ProductPage({ params }: Props) {
   const { slug } = params;
 
- const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/slug/${slug}`, {
-    method: "GET",
-    cache: "no-cache",
-  })
+  const product = await getProductsBySlug(slug);
 
-  const product = await response.json();
-
-  console.log(product);
-
-
-  return (
-   <SectionProduct product={product} />
-  );
+  return <SectionProduct product={product} />;
 }

@@ -3,6 +3,7 @@ import {
   ProductsResponse,
 } from "@/app/interface/products/ProductsResponse";
 import { ProductsByPet } from "@/components/component/products";
+import { getProductsByPet } from "@/lib/api/productsApi";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -28,25 +29,6 @@ const pets = [
   },
 ];
 
-const products = [
-  {
-    name: "Producto 1",
-    price: "$19.99",
-    description: "Descripción del Producto",
-    image:
-      "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713359989/products/vsririqv6aldivisv814.jpg",
-    link: "#",
-    subcategory: "Secos",
-  },
-  {
-    name: "Producto 3",
-    price: "$14.99",
-    description: "Descripción del Producto",
-    image: "/placeholder.svg",
-    link: "#",
-    subcategory: "Húmedos",
-  },
-];
 
 export default async function PetPage({ params, searchParams }: Props) {
   const { pet } = params;
@@ -58,26 +40,20 @@ export default async function PetPage({ params, searchParams }: Props) {
     notFound();
   }
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products/byPet/${selectedPet.name}?subcategory=${subcategory}&brand=${brand}`,
-    {
-      method: "GET",
-      cache: "no-cache",
-    }
-  );
-
-  const data: Product[] = await response.json();
+  const products = await getProductsByPet({
+    pet: pet,
+    subcategory: subcategory as string,
+    brand: brand as string,
+  });
 
   return (
-   
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProductsByPet
-          products={data}
-          subcategory={subcategory as string}
-          title={selectedPet.title}
-          description={selectedPet.description}
-        />
-      </Suspense>
-   
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductsByPet
+        products={products}
+        subcategory={subcategory as string}
+        title={selectedPet.title}
+        description={selectedPet.description}
+      />
+    </Suspense>
   );
 }

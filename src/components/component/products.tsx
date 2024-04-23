@@ -8,6 +8,8 @@ import ProductsList from "../native/products/productsList";
 import { PaginationProducts } from "./pagination";
 import { Category } from "@/app/interface/categories/Categories.interface";
 import { Brand } from "@/app/interface/brands/Brands.interface";
+import { getCategories } from "@/lib/api/categoriesApi";
+import { getBrands } from "@/lib/api/brandsApi";
 
 interface Props {
   title: string;
@@ -22,15 +24,9 @@ export async function ProductsByPet({
   products,
   subcategory,
 }: Props) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/categories`
-  );
-  const responseBrands = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/brands`);
 
    
-  const brands:Brand[] = await responseBrands.json();
-
-  const categories: Category[] = await response.json();
+  const [brands,categories] = await Promise.all([getBrands(),getCategories()]);
 
   return (
     <div className="container mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 px-4 md:px-6 py-12 md:py-24">
