@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { CarouselDemo } from "../corousel";
 import { useState, useEffect } from "react";
+import { BackButton } from "./backButton";
 
 interface Image {
   id: number;
@@ -48,6 +49,7 @@ export default function SectionProduct({product}:Props) {
 
   return (
     <section className="w-full py-6 md:py-12 lg:py-24">
+      <BackButton/>
       <div className="container flex flex-col md:flex-row items-start gap-8 px-4 md:px-6">
         <CarouselDemo  images={product.images}/>
         <div className="space-y-6">
