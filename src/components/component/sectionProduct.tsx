@@ -17,6 +17,11 @@ interface Variant {
   value: string;
 }
 
+interface Discount {
+  id: number;
+  percentage: number;
+}
+
 interface Product {
   id: string;
   title: string;
@@ -28,17 +33,19 @@ interface Product {
   isActive: boolean;
   isPopular: boolean;
   variants: Variant[];
+  discount: Discount;
   images: Image[];
 }
 
 interface Props {
-    product: Product;
-    
+  product: Product;
 }
 
+export default function SectionProduct({ product }: Props) {
+  console.log(product);
+  const [quantity, setQuantity] = useState(1);
+  const discountPrice = product.discount?.percentage / 100;
 
-export default function SectionProduct({product}:Props) {
- 
   const [variantSelected, setVariantSelected] = useState<Variant>(
     product.variants[0]
   );
@@ -47,19 +54,48 @@ export default function SectionProduct({product}:Props) {
     setVariantSelected(variant);
   };
 
+  const handleAddToCart = () => {
+
+    const unitPrice = variantSelected.price-(variantSelected.price*discountPrice);
+    const totalPrice = unitPrice * quantity;
+
+    const prductCart = {
+      id: product.id,
+      title: product.title,
+      quantity: quantity,
+      unitPrice: unitPrice,
+      totalPrice: totalPrice,
+      variant: variantSelected,
+      image: product.images[0].url
+    }
+    
+  };
+
   return (
     <section className="w-full py-6 md:py-12 lg:py-24">
-      <BackButton/>
+      <BackButton />
       <div className="container flex flex-col md:flex-row items-start gap-8 px-4 md:px-6">
-        <CarouselDemo  images={product.images}/>
+        <CarouselDemo images={product.images} />
         <div className="space-y-6">
           <h1 className="text-2xl md:text-4xl font-bold tracking-tighter">
-            Classic Sneakers
+            {product.title}
           </h1>
 
           <p className="text-xl md:text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-            ${variantSelected.price}
+            {discountPrice
+              ? `$${
+                  variantSelected.price - variantSelected.price * discountPrice
+                }`
+              : `$${variantSelected.price}`}
           </p>
+          {product.discount && (
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="line-through text-zinc-500 dark:text-zinc-400">
+                ${variantSelected.price}
+              </span>{" "}
+              {product.discount.percentage}% de descuento
+            </p>
+          )}
 
           <h4 className="font-bold ">Seleccione una presentacion</h4>
           <div className="flex space-x-2">
@@ -90,6 +126,7 @@ export default function SectionProduct({product}:Props) {
               Cantidad
             </label>
             <input
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
               type="number"
               id="quantity"
               name="quantity"
@@ -99,7 +136,9 @@ export default function SectionProduct({product}:Props) {
             />
           </div>
 
-          <Button className="w-full h-12 rounded-md bg-primario text-zinc-50 shadow-sm hover:bg-none">
+          <Button 
+            onClick={handleAddToCart}
+          className="w-full h-12 rounded-md bg-primario text-zinc-50 shadow-sm hover:bg-none">
             Añadir al carrito
           </Button>
 

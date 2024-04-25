@@ -3,6 +3,15 @@ interface ProductImage {
   url: string;
 }
 
+interface Discount {
+  id: number;
+  name: string;
+  percentage: number;
+  isActive: boolean;
+  expiresAt: string;
+  startsAt: string;
+}
+
 export interface Product {
   id: string;
   title: string;
@@ -12,6 +21,7 @@ export interface Product {
   isPopular: boolean;
   isNew: boolean;
   productImages: ProductImage[];
+  discount: Discount | null;
 }
 
 export interface ProductsResponse {

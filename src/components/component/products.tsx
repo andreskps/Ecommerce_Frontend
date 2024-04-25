@@ -5,9 +5,6 @@ import {
 import { Categories } from "../native/categories/categories";
 import { Filters } from "../native/filters/filters";
 import ProductsList from "../native/products/productsList";
-import { PaginationProducts } from "./pagination";
-import { Category } from "@/app/interface/categories/Categories.interface";
-import { Brand } from "@/app/interface/brands/Brands.interface";
 import { getCategories } from "@/lib/api/categoriesApi";
 import { getBrands } from "@/lib/api/brandsApi";
 

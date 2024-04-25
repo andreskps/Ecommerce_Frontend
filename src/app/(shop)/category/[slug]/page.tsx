@@ -6,6 +6,7 @@ import ProductsList from "@/components/native/products/productsList";
 import { FiltersMobile } from "@/components/category/FiltersMobile";
 import { getCategories } from "@/lib/api/categoriesApi";
 import { getProductsByCategory } from "@/lib/api/productsApi";
+import { ProductsGrid } from "@/components/native/products/productsGrid";
 interface Props {
   params: {
     slug: string;
@@ -60,6 +61,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             <p className="max-w-[900px] text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400"></p>
           </div>
           <ProductsList products={products} />
+          {/* <ProductsGrid/> */}
         </div>
       </div>
     </div>
