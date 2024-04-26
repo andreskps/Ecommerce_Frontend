@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CarouselDemo } from "../corousel";
 import { useState, useEffect } from "react";
 import { BackButton } from "./backButton";
+import { CartItem, useCartStore } from "@/store/cart-store";
 
 interface Image {
   id: number;
@@ -42,9 +43,9 @@ interface Props {
 }
 
 export default function SectionProduct({ product }: Props) {
-  console.log(product);
   const [quantity, setQuantity] = useState(1);
   const discountPrice = product.discount?.percentage / 100;
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const [variantSelected, setVariantSelected] = useState<Variant>(
     product.variants[0]
@@ -59,16 +60,25 @@ export default function SectionProduct({ product }: Props) {
     const unitPrice = variantSelected.price-(variantSelected.price*discountPrice);
     const totalPrice = unitPrice * quantity;
 
-    const prductCart = {
-      id: product.id,
+    const productCart:CartItem = {
+      idProduct: product.id,
+      slug: product.slug,
       title: product.title,
       quantity: quantity,
-      unitPrice: unitPrice,
-      totalPrice: totalPrice,
-      variant: variantSelected,
-      image: product.images[0].url
+      variant: {
+        id: variantSelected.id,
+        attribute: variantSelected.attribute,
+        value: variantSelected.value,
+        unitPrice: unitPrice,
+      },
+      image: product.images[0].url,
     }
-    
+
+    addToCart(productCart);
+
+     setQuantity(1);
+
+     alert("Producto añadido al carrito");
   };
 
   return (
@@ -131,7 +141,7 @@ export default function SectionProduct({ product }: Props) {
               id="quantity"
               name="quantity"
               min="1"
-              defaultValue="1"
+              defaultValue={quantity.toString()}
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
