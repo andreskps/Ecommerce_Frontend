@@ -1,6 +1,10 @@
 
 import Footer from "@/components/native/Footer"
 import Header from "@/components/native/nav/parent"
+import { Metadata } from "next"
+
+
+
 
 export default async function DashboardLayout({
    children,
