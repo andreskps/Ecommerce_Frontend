@@ -5,15 +5,15 @@ import { CartItem } from "./cartItem";
 export const SectionCart = () => {
   const cart = useCartStore((state) => state.cart);
 
-  //   if (cart.length === 0) {
-  //     return (
-  //       <div className="flex items-center justify-center h-96">
-  //         <p className="text-2xl font-bold text-gray-500">
-  //           Tu carrito está vacío
-  //         </p>
-  //       </div>
-  //     );
-  //   }
+    if (cart.length === 0) {
+      return (
+        <div className="flex items-center justify-center h-96">
+          <p className="text-2xl font-bold text-gray-500">
+            Tu carrito está vacío
+          </p>
+        </div>
+      );
+    }
 
   return (
     <div className="mx-auto max-w-5xl justify-center md:flex md:space-x-6 xl:px-0">
@@ -21,6 +21,8 @@ export const SectionCart = () => {
         {cart.map((item) => (
           <CartItem
             key={item.variant.id}
+            productId={item.idProduct}
+            variantId={item.variant.id}
             image={item.image}
             title={item.title}
             variant={item.variant.value}

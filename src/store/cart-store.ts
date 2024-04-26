@@ -18,6 +18,7 @@ export interface CartItem {
 interface State {
   cart: CartItem[];
   addToCart: (product: CartItem) => void;
+  removeFromCart: (idProduct: string, variantId: number) => void;
 }
 
 export const useCartStore = create<State>()(
@@ -57,6 +58,16 @@ export const useCartStore = create<State>()(
 
         set({ cart: updatedCart });
       },
+      removeFromCart: (idProduct: string, variantId: number) => {
+        const { cart } = get();
+
+        const updatedCart = cart.filter(
+          (item) =>
+            item.idProduct !== idProduct || item.variant.id !== variantId
+        );
+
+        set({ cart: updatedCart });
+      }
     }),
     {
       name: "cart-storage", // unique name
