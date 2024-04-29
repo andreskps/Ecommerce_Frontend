@@ -9,9 +9,11 @@ import { Button } from '@/components/ui/button'
 import { LogInIcon, MoonIcon, ShoppingBasketIcon, SunIcon, UserIcon } from 'lucide-react'
 // import { useTheme } from 'next-themes'
 import Link from 'next/link'
+import { useSession } from "next-auth/react";
 
 export default function Header() {
 //    const { authenticated } = useAuthenticated()
+   const { data: session,status } = useSession()
 
    return (
       <header className="bg-primario sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur mb-4 px-[1.4rem] md:px-[4rem] lg:px-[6rem] xl:px-[8rem] 2xl:px-[12rem]">
@@ -24,7 +26,10 @@ export default function Header() {
                </div>
                <CartNav />
                {/* <ThemeToggle /> */}
-               {true ? <UserNav /> : <LoginDialog />}
+               {
+                  status === "loading" ? <p>Loading...</p> : session ? <UserNav /> : <LoginDialog />
+               }
+               {/* {session ? <UserNav /> : <LoginDialog />} */}
             </div>
          </div>
       </header>
