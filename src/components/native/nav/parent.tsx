@@ -71,9 +71,9 @@ export function CartNav() {
 
 function LoginDialog() {
   return (
-    <Link href="/login">
+    <Link href="/auth/login">
       
-        <LogInIcon className="h-4" />
+        <LogInIcon className="h-4 text-white" />
         {/* <span>Login</span> */}
       
     </Link>

@@ -4,26 +4,31 @@ export interface NavItem {
    title: string
    href: string
    external?: boolean
+
 }
 
 
 interface DocsConfig {
    mainNav: NavItem[]
    sidebarNav: NavItem[]
+   privateNav?: NavItem[]
 }
 
 export const docsConfig: DocsConfig = {
    mainNav: [
       {
-         title: 'Documentation',
-         href: '/docs',
+         title: 'Perros',
+         href: '/pet/perro',
       },
 
       {
-         title: 'GitHub',
-         href: 'https://github.com/accretence',
-         external: true,
+         title: 'Gatos',
+         href: '/pet/gato',
       },
+      {
+         title: 'Ofertas',
+         href: '/products',
+      }
    ],
    sidebarNav: [
       {
@@ -51,4 +56,14 @@ export const docsConfig: DocsConfig = {
          href: '/about',
       },
    ],
+   privateNav: [
+      {
+         title: 'Mi cuenta',
+         href: '/profile',
+      },{
+         title: 'Mis pedidos',
+         href: '/profile/orders',
+      },
+   ]
+   
 }

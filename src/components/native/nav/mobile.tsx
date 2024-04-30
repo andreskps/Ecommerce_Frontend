@@ -6,15 +6,22 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { docsConfig } from '@/config/docs'
 // import Config from '@/config/site'
 import { cn } from '@/lib/utils'
-import { ViewIcon } from 'lucide-react'
+import { ViewIcon,Dog,Cat, LucideIcon } from 'lucide-react'
 import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { AlignJustify } from 'lucide-react';
 import { config } from '@/config/site'
 
+import { Separator } from '@/components/ui/separator'
+import { useSession,signOut } from 'next-auth/react'
+
 export function MobileNav() {
    const [open, setOpen] = useState(false)
+
+   const { data: session, status } = useSession();
+
+   const isAuth = status === 'authenticated'
 
    return (
       <Sheet open={open} onOpenChange={setOpen}>
@@ -37,8 +44,8 @@ export function MobileNav() {
                   {config.name}
                </div>
             </MobileLink>
-            <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-               <div className="flex flex-col space-y-3">
+            <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-5">
+               <div className="flex flex-col space-y-4">
                   {docsConfig.mainNav?.map(
                      (item) =>
                         item.href && (
@@ -47,19 +54,57 @@ export function MobileNav() {
                               href={item.href}
                               onOpenChange={setOpen}
                               className='text-white'
+                         
                            >
                               {item.title}
                            </MobileLink>
                         )
                   )}
                </div>
+               {/* <Separator />
                <div className="flex flex-col space-y-2">
                   {docsConfig.sidebarNav.map((item, index) => (
                      <div key={index} className="flex flex-col space-y-3 pt-6">
                         <h4 className="font-medium text-white">{item.title}</h4>
                      </div>
                   ))}
-               </div>
+               </div> */}
+               {isAuth && (
+                  <>
+                     <Separator />
+                     <div className="flex flex-col space-y-4">
+                        {
+                           docsConfig.privateNav?.map(
+                              (item) =>
+                                 item.href && (
+                                    <MobileLink
+                                       key={item.href}
+                                       href={item.href}
+                                       onOpenChange={setOpen}
+                                       className='text-white'
+                                    >
+                                       {item.title}
+                                    </MobileLink>
+                                 )
+                           )
+                        }
+                     </div>
+                  </>
+               )}
+
+
+               {
+                  isAuth && (
+                     <Button
+                        variant="ghost"
+                        className="text-white w-full"
+                        onClick={() => signOut()}
+                        
+                     >
+                        Logout
+                     </Button>
+                  )
+               }
             </ScrollArea>
          </SheetContent>
       </Sheet>
@@ -70,8 +115,11 @@ interface MobileLinkProps extends LinkProps {
    onOpenChange?: (open: boolean) => void
    children: React.ReactNode
    className?: string
+
 }
 
+
+// ...
 function MobileLink({
    href,
    onOpenChange,
@@ -90,7 +138,10 @@ function MobileLink({
          className={cn(className)}
          {...props}
       >
-         {children}
+         <div className="flex items-center"> {/* Contenedor Flexbox */}
+             
+            <span className="ml-2">{children}</span> {/* Texto con margen izquierdo */}
+         </div>
       </Link>
    )
 }
