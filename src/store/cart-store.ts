@@ -26,6 +26,7 @@ interface State {
   removeFromCart: (idProduct: string, variantId: number) => void;
   getTotal: () => number;
   getInformations: () => { subtotal: number; shipping: number; total: number };
+  getTotalItems: () => number;
 }
 
 export const useCartStore = create<State>()(
@@ -108,6 +109,10 @@ export const useCartStore = create<State>()(
         );
 
         set({ cart: updatedCart });
+      },
+      getTotalItems: () => {
+        const { cart } = get();
+        return cart.reduce((acc, item) => acc + item.quantity, 0);
       },
     }),
     {

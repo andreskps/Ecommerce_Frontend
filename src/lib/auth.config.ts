@@ -1,7 +1,5 @@
-
-
 import CredentialsProvider from "next-auth/providers/credentials";
-import {NextAuthOptions} from 'next-auth';
+import { NextAuthOptions } from "next-auth";
 
 export const authConfig: NextAuthOptions = {
   providers: [
@@ -16,7 +14,6 @@ export const authConfig: NextAuthOptions = {
           email: credentials!.email,
           password: credentials!.password,
         };
-      
 
         const res = await fetch("http://localhost:3000/api/auth/login", {
           method: "POST",
@@ -26,7 +23,6 @@ export const authConfig: NextAuthOptions = {
           body: JSON.stringify(payload),
         });
 
-      
         const data = await res.json();
 
         if (!res.ok) {
@@ -37,24 +33,25 @@ export const authConfig: NextAuthOptions = {
       },
     }),
   ],
-    pages: {
-      signIn: "/auth/login", // si no esta logeado lo mandamos a esta pagina
-    },
+  pages: {
+    signIn: "/auth/login", // si no esta logeado lo mandamos a esta pagina
+  },
 
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 7, // Una semana
   },
 
   callbacks: {
-    async signIn({ user, account, profile }) {
-      // console.log(user);
-      // if (user.roles?.includes("admin")) {
-      //   return "/admin";
-      // }
+    // async signIn({ user, account, profile }) {
+    //   // console.log(user);
+    //   // if (user.roles?.includes("admin")) {
+    //   //   return "/admin";
+    //   // }
 
-      // return "/";
-      return true;
-    },
+    //   // return "/";
+    //   return true;
+    // },
 
     async jwt({ token, user, account, profile }) {
       if (user) {
@@ -62,11 +59,9 @@ export const authConfig: NextAuthOptions = {
           ...token,
           name: user.name,
           roles: user.roles,
-
           access_token: user.access_token,
         };
       }
-
       return token;
     },
 
@@ -75,6 +70,7 @@ export const authConfig: NextAuthOptions = {
         session.user.access_token = token.access_token;
         session.user.name = token.name;
         session.user.roles = token.roles;
+        // session.expires_in = token.expires_in;
       }
 
       return session;
