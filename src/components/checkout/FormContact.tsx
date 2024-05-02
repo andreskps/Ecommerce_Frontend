@@ -26,11 +26,18 @@ import {
   SelectValue,
 } from "../ui/select";
 
+import { DataLocations } from "@/lib/dataLocation";
+import { useCartStore } from "@/store/cart-store";
 interface Props {
   form: UseFormReturn<z.infer<typeof infoContactSchema>>;
+  
 }
-
 export const FormInfoContact = ({ form }: Props) => {
+
+  const[selectedDepartamento, setSelectedDepartamento] = React.useState(0);
+
+  const setShipping = useCartStore((state) => state.setPriceShipping);
+
   return (
     <>
       <div className="space-y-2">
@@ -145,6 +152,7 @@ export const FormInfoContact = ({ form }: Props) => {
                   <Select
                     defaultValue="US"
                     onValueChange={(value) => {
+                      setSelectedDepartamento(parseInt(value));
                       form.setValue("department", value);
                     }}
                   >
@@ -152,8 +160,13 @@ export const FormInfoContact = ({ form }: Props) => {
                       <SelectValue placeholder="Selecciona tu país" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="US">Estados Unidos</SelectItem>
-                      <SelectItem value="MX">México</SelectItem>
+                      {/* <SelectItem value="US">Estados Unidos</SelectItem>
+                      <SelectItem value="MX">México</SelectItem> */}
+                      {
+                        DataLocations.map((location) => (
+                          <SelectItem value={location.id.toString()}>{location.name}</SelectItem>
+                        ))
+                      }
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -172,6 +185,8 @@ export const FormInfoContact = ({ form }: Props) => {
                   <Select
                     defaultValue="US"
                     onValueChange={(value) => {
+                      const price = DataLocations.find((location) => location.id === selectedDepartamento)?.ciudades.find((ciudad) => ciudad.id.toString() === value)?.priceShipping;
+                      setShipping(parseFloat(price ?? 0));
                       form.setValue("province", value);
                     }}
                   >
@@ -179,8 +194,16 @@ export const FormInfoContact = ({ form }: Props) => {
                       <SelectValue placeholder="Selecciona tu país" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="US">Bello</SelectItem>
-                      <SelectItem value="MX">México</SelectItem>
+                      {/* <SelectItem value="US">Bello</SelectItem>
+                      <SelectItem value="MX">México</SelectItem> */}
+                      {
+                        
+                        DataLocations.find((location) => location.id === selectedDepartamento)?.ciudades.map((ciudad) => (
+                          <SelectItem value={ciudad.id.toString()}>{ciudad.name}</SelectItem>
+                        ))
+                        
+
+                      }
                     </SelectContent>
                   </Select>
                 </FormControl>

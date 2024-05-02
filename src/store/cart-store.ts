@@ -17,6 +17,8 @@ export interface CartItem {
 
 interface State {
   cart: CartItem[];
+  priceShipping: number;
+  setPriceShipping: (price: number) => void;
   addToCart: (product: CartItem) => void;
   updateQuantity: (
     idProduct: string,
@@ -33,6 +35,7 @@ export const useCartStore = create<State>()(
   persist(
     (set, get) => ({
       cart: [],
+      priceShipping: 0,
       getTotal: () => {
         const { cart } = get();
         return cart.reduce(
@@ -42,7 +45,7 @@ export const useCartStore = create<State>()(
       },
       getInformations: () => {
         const subtotal = get().getTotal();
-        const shipping = 10000;
+        const shipping = get().priceShipping;
         const total = subtotal + shipping;
         return { subtotal, shipping, total };
       },
@@ -114,6 +117,10 @@ export const useCartStore = create<State>()(
         const { cart } = get();
         return cart.reduce((acc, item) => acc + item.quantity, 0);
       },
+      setPriceShipping: (price: number) => {
+        set({ priceShipping: price });
+      }
+  
     }),
     {
       name: "cart-storage", // unique name
