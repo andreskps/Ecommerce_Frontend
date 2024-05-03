@@ -11,6 +11,8 @@ interface State {
     department: string;
     province: string;
     address: string;
+    instructions?: string;
+    neighborhood?: string;
   };
 
   setShipping: (shipping: State["shipping"]) => void;
@@ -28,6 +30,8 @@ export const useShippingStore = create<State>()(
         department: "",
         province: "",
         address: "",
+        instructions: "",
+        neighborhood: "",
       },
 
       setShipping: (shipping) => {

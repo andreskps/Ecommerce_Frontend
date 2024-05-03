@@ -3,8 +3,8 @@
 import { Separator } from "@/components/ui/separator";
 import { CardContent, CardFooter, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FormInfoContact } from "../checkout/FormContact";
-import { infoContactSchema } from "@/validators/infoContactSchema";
+import { FormShippingLocation } from "../checkout/FormShippingLocation";
+import { ShippingInfo } from "@/validators/shippingInfoSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -12,10 +12,11 @@ import { useShippingStore } from "@/store/shipping-store";
 import { useCartStore } from "@/store/cart-store";
 import { useEffect, useState } from "react";
 import { currencyFormat } from "@/lib/currencyFormat";
+import { FormShippingContact } from "../checkout/FormShippingContact";
+import { useRouter } from 'next/navigation';
 
-export default function FormAddress() {
-
-  const [isClient, setIsClient] = useState(false)
+export default function SectionShipping() {
+  const [isClient, setIsClient] = useState(false);
   const setShipping = useShippingStore((state) => state.setShipping);
   const shipping = useShippingStore((state) => state.shipping);
 
@@ -23,33 +24,35 @@ export default function FormAddress() {
   const getInformations = useCartStore((state) => state.getInformations);
   const cart = useCartStore((state) => state.cart);
 
-  const form = useForm<z.infer<typeof infoContactSchema>>({
-    resolver: zodResolver(infoContactSchema),
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof ShippingInfo>>({
+    resolver: zodResolver(ShippingInfo),
     defaultValues: { ...shipping },
   });
 
   useEffect(() => {
     form.reset({ ...shipping });
-
-  }, [shipping,shippingPrice]);
+  }, [shipping]);
 
   useEffect(() => {
-    setIsClient(true)
-  }, [])
-  
+    setIsClient(true);
+  }, []);
 
-  async function onSubmit(data: z.infer<typeof infoContactSchema>) {
+  async function onSubmit(data: z.infer<typeof ShippingInfo>) {
     setShipping(data);
   }
+  // if(cart.length === 0){
+  //   router.push('/cart');
+  // }
 
   return (
     <div
-      key="1"
       className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto py-12 px-4"
     >
       <div className="space-y-6">
-        <FormInfoContact form={form} />
-        {/* <FormShipping /> */}
+        <FormShippingContact form={form} />
+        <FormShippingLocation form={form} />
       </div>
       <div className="space-y-6">
         <div className="space-y-2">
@@ -58,10 +61,8 @@ export default function FormAddress() {
             Revisa los productos que has seleccionado.
           </p>
         </div>
-        {
-          isClient ? (
-          
-            <Card>
+        {isClient ? (
+          <Card>
             <CardContent className="space-y-4">
               {cart.map((item) => (
                 <>
@@ -92,34 +93,28 @@ export default function FormAddress() {
                   </div>
                 </>
               ))}
-  
+
               <Separator />
               <div className="grid grid-cols-4 items-center">
-                  <div className="col-span-2 font-medium">Subtotal</div>
-                  <div className="text-right" >
-                    
-                    {
-                      currencyFormat(getInformations().subtotal)
-                    }
-                  </div>
+                <div className="col-span-2 font-medium">Subtotal</div>
+                <div className="text-right">
+                  {currencyFormat(getInformations().subtotal)}
                 </div>
-                <div className="grid grid-cols-4 items-center">
-                  <div className="col-span-2 font-medium">Envío</div>
-                  <div className="text-right" >
-                    {
-                      getInformations().shipping === 0 ? "Gratis" : currencyFormat(getInformations().shipping)
-                    }
-                  </div>
+              </div>
+              <div className="grid grid-cols-4 items-center">
+                <div className="col-span-2 font-medium">Envío</div>
+                <div className="text-right">
+                  {getInformations().shipping === 0
+                    ? "Gratis"
+                    : currencyFormat(getInformations().shipping)}
                 </div>
-                <div className="grid grid-cols-4 items-center">
-                  <div className="col-span-2 font-medium">Total</div>
-                  <div className="text-right font-bold" >
-                    {
-                      currencyFormat(getInformations().total)
-                    }
-                  </div>
+              </div>
+              <div className="grid grid-cols-4 items-center">
+                <div className="col-span-2 font-medium">Total</div>
+                <div className="text-right font-bold">
+                  {currencyFormat(getInformations().total)}
                 </div>
-                
+              </div>
             </CardContent>
             <CardFooter>
               <Button
@@ -131,15 +126,11 @@ export default function FormAddress() {
               </Button>
             </CardFooter>
           </Card>
-          ) : (
-            <div className="flex items-center justify-center h-96">
-              <p className="text-2xl font-bold text-gray-500">
-                Cargando...
-              </p>
-            </div>
-          )
-        }
-     
+        ) : (
+          <div className="flex items-center justify-center h-96">
+            <p className="text-2xl font-bold text-gray-500">Cargando...</p>
+          </div>
+        )}
       </div>
     </div>
   );

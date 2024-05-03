@@ -1,7 +1,5 @@
-import FormAddress from "@/components/component/form-address";
+import SectionShipping from "@/components/component/sectionShipping";
 
 export default function AddresPage() {
-  return (
-     <FormAddress/>
-  );
+  return <SectionShipping />;
 }

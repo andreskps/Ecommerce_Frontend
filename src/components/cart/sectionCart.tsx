@@ -2,10 +2,11 @@
 import { useCartStore } from "@/store/cart-store";
 import { CartItem } from "./cartItem";
 import { currencyFormat } from "@/lib/currencyFormat";
-
+import { useRouter } from "next/navigation";
 export const SectionCart = () => {
   const cart = useCartStore((state) => state.cart);
   const getInformations = useCartStore((state) => state.getInformations);
+  const router = useRouter();
 
     if (cart.length === 0) {
       return (
@@ -51,7 +52,9 @@ export const SectionCart = () => {
             {/* <p className="text-sm text-gray-700">including VAT</p> */}
           </div>
         </div>
-        <button className="mt-6 w-full rounded-md bg-primario py-1.5 font-medium text-blue-50 ">
+        <button 
+        onClick={() => router.push("/checkout/address")}
+        className="mt-6 w-full rounded-md bg-primario py-1.5 font-medium text-blue-50 ">
           Pagar
         </button>
       </div>
