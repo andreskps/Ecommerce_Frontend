@@ -16,6 +16,8 @@ import { FormShippingContact } from "../checkout/FormShippingContact";
 import { useRouter } from 'next/navigation';
 import { CreateOrder } from "@/app/interface/order/order.interface";
 import { createOrder } from "@/lib/api/orderApi";
+import { useToast } from "@/components/ui/use-toast"
+
 
 
 export default function SectionShipping() {
@@ -23,6 +25,7 @@ export default function SectionShipping() {
   const setShipping = useShippingStore((state) => state.setShipping);
   const shipping = useShippingStore((state) => state.shipping);
 
+  const {toast} = useToast();
   const shippingPrice = useCartStore((state) => state.priceShipping);
   const getInformations = useCartStore((state) => state.getInformations);
   const cart = useCartStore((state) => state.cart);
@@ -64,13 +67,19 @@ export default function SectionShipping() {
       const response = await createOrder(newOrder);
 
       if(!response.ok){
-        alert('Error al crear la orden');
+        toast({
+          title: 'Error',
+          description: 'Ha ocurrido un error al crear la orden',
+          className: 'bg-red-500 text-white'
+        })
         return
       }
 
-      alert('Orden creada correctamente');
-
-
+      toast({
+        title: 'Orden creada',
+        description: 'Tu orden ha sido creada exitosamente',
+        className: 'bg-green-500 text-white'
+      })
   }
   // if(cart.length === 0){
   //   router.push('/cart');

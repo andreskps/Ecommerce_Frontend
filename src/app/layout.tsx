@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 };
 
 import React from "react"; // Add the missing import statement
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
   children,
@@ -25,7 +26,11 @@ export default function RootLayout({
     <AuthProvider
       children={
         <html lang="en">
-          <body className={inter.className}>{children}</body>
+          <body className={inter.className}>{children}
+
+          <Toaster/>
+          
+          </body>
         </html>
       }
     ></AuthProvider>
