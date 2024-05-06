@@ -14,6 +14,9 @@ import { useEffect, useState } from "react";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { FormShippingContact } from "../checkout/FormShippingContact";
 import { useRouter } from 'next/navigation';
+import { CreateOrder } from "@/app/interface/order/order.interface";
+import { createOrder } from "@/lib/api/orderApi";
+
 
 export default function SectionShipping() {
   const [isClient, setIsClient] = useState(false);
@@ -40,7 +43,34 @@ export default function SectionShipping() {
   }, []);
 
   async function onSubmit(data: z.infer<typeof ShippingInfo>) {
-    setShipping(data);
+      const newOrder: CreateOrder = {
+        name: data.name,
+        email: data.email,
+        lastName: data.lastName,
+        phone: data.phone,
+        variants: cart.map((item) => ({
+          id: item.variant.id,
+          quantity: item.quantity,
+        })),
+        address: {
+          address: data.address,
+          neighborhood: data.neighborhood,
+          addressDetail: data.instructions,
+          municipioId: parseInt(data.province),
+        },
+      };
+
+
+      const response = await createOrder(newOrder);
+
+      if(!response.ok){
+        alert('Error al crear la orden');
+        return
+      }
+
+      alert('Orden creada correctamente');
+
+
   }
   // if(cart.length === 0){
   //   router.push('/cart');
