@@ -3,6 +3,7 @@ export interface CreateOrder {
   email: string;
   lastName: string;
   phone: string;
+  namePet: string;
 
   variants: {
     id: number;

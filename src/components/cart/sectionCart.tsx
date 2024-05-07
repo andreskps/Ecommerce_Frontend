@@ -3,6 +3,7 @@ import { useCartStore } from "@/store/cart-store";
 import { CartItem } from "./cartItem";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { useRouter } from "next/navigation";
+import { Input } from "../ui/input";
 export const SectionCart = () => {
   const cart = useCartStore((state) => state.cart);
   const getInformations = useCartStore((state) => state.getInformations);
@@ -41,7 +42,7 @@ export const SectionCart = () => {
           <p className="text-gray-700">${getInformations().subtotal}</p>
         </div>
         <div className="flex justify-between">
-          <p className="text-gray-700">Shipping</p>
+          <p className="text-gray-700">Precio de envio estimado</p>
           <p className="text-gray-700">{currencyFormat(getInformations().shipping)}</p>
         </div>
         <hr className="my-4" />
@@ -58,6 +59,8 @@ export const SectionCart = () => {
           Pagar
         </button>
       </div>
+
+      
     </div>
   );
 };

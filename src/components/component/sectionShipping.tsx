@@ -13,19 +13,22 @@ import { useCartStore } from "@/store/cart-store";
 import { useEffect, useState } from "react";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { FormShippingContact } from "../checkout/FormShippingContact";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { CreateOrder } from "@/app/interface/order/order.interface";
 import { createOrder } from "@/lib/api/orderApi";
-import { useToast } from "@/components/ui/use-toast"
-
-
+import { useToast } from "@/components/ui/use-toast";
+import { Input } from "../ui/input";
+import { applyCodeDiscount } from "@/lib/api/codeDiscountApi";
 
 export default function SectionShipping() {
   const [isClient, setIsClient] = useState(false);
+  const [codeDiscount, setCodeDiscount] = useState("");
+  const [percentageDiscount, setPercentageDiscount] = useState(0);
+
   const setShipping = useShippingStore((state) => state.setShipping);
   const shipping = useShippingStore((state) => state.shipping);
 
-  const {toast} = useToast();
+  const { toast } = useToast();
   const shippingPrice = useCartStore((state) => state.priceShipping);
   const getInformations = useCartStore((state) => state.getInformations);
   const cart = useCartStore((state) => state.cart);
@@ -37,6 +40,37 @@ export default function SectionShipping() {
     defaultValues: { ...shipping },
   });
 
+  const handleCodeDiscount = async () => {
+    const discount = await applyCodeDiscount(codeDiscount);
+    const totalProducts = getInformations().subtotal;
+
+    if (!discount) {
+      toast({
+        title: "Error",
+        description: "Código de descuento inválido",
+        className: "bg-red-500 text-white",
+      });
+      return;
+    }
+
+    if (totalProducts < discount.minimumAmount) {
+      toast({
+        title: "Error",
+        description: `El monto mínimo para aplicar el descuento es de ${discount.minimumAmount}`,
+        className: "bg-red-500 text-white",
+      });
+      return;
+    }
+
+    setPercentageDiscount(discount.percentage);
+
+    toast({
+      title: "Descuento aplicado",
+      description: `Se ha aplicado un descuento de ${discount.percentage}%`,
+      className: "bg-green-500 text-white",
+    });
+  };
+
   useEffect(() => {
     form.reset({ ...shipping });
   }, [shipping]);
@@ -46,49 +80,60 @@ export default function SectionShipping() {
   }, []);
 
   async function onSubmit(data: z.infer<typeof ShippingInfo>) {
-      const newOrder: CreateOrder = {
-        name: data.name,
-        email: data.email,
-        lastName: data.lastName,
-        phone: data.phone,
-        variants: cart.map((item) => ({
-          id: item.variant.id,
-          quantity: item.quantity,
-        })),
-        address: {
-          address: data.address,
-          neighborhood: data.neighborhood,
-          addressDetail: data.instructions,
-          municipioId: parseInt(data.province),
-        },
-      };
+    setShipping({
+      address: data.address,
+      department: data.department,
+      email: data.email,
+      instructions: data.instructions,
+      lastName: data.lastName,
+      name: data.name,
+      neighborhood: data.neighborhood,
+      phone: data.phone,
+      province: data.province,
+      namePet: data.namePet,
+    });
 
+    const newOrder: CreateOrder = {
+      name: data.name,
+      email: data.email,
+      lastName: data.lastName,
+      phone: data.phone,
+      namePet: data.namePet,
+      variants: cart.map((item) => ({
+        id: item.variant.id,
+        quantity: item.quantity,
+      })),
+      address: {
+        address: data.address,
+        neighborhood: data.neighborhood,
+        addressDetail: data.instructions,
+        municipioId: parseInt(data.province),
+      },
+    };
 
-      const response = await createOrder(newOrder);
+    const response = await createOrder(newOrder);
 
-      if(!response.ok){
-        toast({
-          title: 'Error',
-          description: 'Ha ocurrido un error al crear la orden',
-          className: 'bg-red-500 text-white'
-        })
-        return
-      }
-
+    if (!response.ok) {
       toast({
-        title: 'Orden creada',
-        description: 'Tu orden ha sido creada exitosamente',
-        className: 'bg-green-500 text-white'
-      })
+        title: "Error",
+        description: "Ha ocurrido un error al crear la orden",
+        className: "bg-red-500 text-white",
+      });
+      return;
+    }
+
+    toast({
+      title: "Orden creada",
+      description: "Tu orden ha sido creada exitosamente",
+      className: "bg-green-500 text-white",
+    });
   }
   // if(cart.length === 0){
   //   router.push('/cart');
   // }
 
   return (
-    <div
-      className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto py-12 px-4"
-    >
+    <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto py-12 px-4">
       <div className="space-y-6">
         <FormShippingContact form={form} />
         <FormShippingLocation form={form} />
@@ -136,9 +181,31 @@ export default function SectionShipping() {
               <Separator />
               <div className="grid grid-cols-4 items-center">
                 <div className="col-span-2 font-medium">Subtotal</div>
-                <div className="text-right">
+                <div
+                  className="text-right"
+                  style={{
+                    textDecoration:
+                      percentageDiscount > 0 ? "line-through" : "none",
+                  }}
+                >
                   {currencyFormat(getInformations().subtotal)}
                 </div>
+                {percentageDiscount > 0 && (
+                  <>
+                    <div className="text-right text-red-500">
+                      -{percentageDiscount}%
+                    </div>
+                    <div className="col-span-2 font-medium mt-2">
+                      Precio con descuento
+                    </div>
+                    <div className="text-right">
+                      {currencyFormat(
+                        getInformations().subtotal *
+                          (1 - percentageDiscount / 100)
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
               <div className="grid grid-cols-4 items-center">
                 <div className="col-span-2 font-medium">Envío</div>
@@ -151,7 +218,11 @@ export default function SectionShipping() {
               <div className="grid grid-cols-4 items-center">
                 <div className="col-span-2 font-medium">Total</div>
                 <div className="text-right font-bold">
-                  {currencyFormat(getInformations().total)}
+                  {currencyFormat(
+                    getInformations().subtotal -
+                      getInformations().subtotal * (percentageDiscount / 100) +
+                      getInformations().shipping
+                  )}
                 </div>
               </div>
             </CardContent>
@@ -163,6 +234,19 @@ export default function SectionShipping() {
               >
                 Confirmar pedido
               </Button>
+              <Input
+                type="text"
+                value={codeDiscount}
+                onChange={(e) => setCodeDiscount(e.target.value)}
+                placeholder="Código de descuento"
+                className="mt-6 w-full"
+              />
+              <button
+                onClick={handleCodeDiscount}
+                className="mt-2 w-full rounded-md bg-primario py-1.5 font-medium text-blue-50 "
+              >
+                Aplicar
+              </button>
             </CardFooter>
           </Card>
         ) : (

@@ -82,7 +82,6 @@ export const FormShippingLocation = ({ form }: Props) => {
                     defaultValue={field.value || ""}
                     onValueChange={(value) => {
                       setSelectedDepartment(value);
-                      console.log(value);
                       form.setValue("province", "");
                       form.setValue("department", value);
                     }}
