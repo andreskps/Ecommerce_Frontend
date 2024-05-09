@@ -4,7 +4,7 @@ export interface CreateOrder {
   lastName: string;
   phone: string;
   namePet: string;
-
+  coupon?:string;
   variants: {
     id: number;
     quantity: number;

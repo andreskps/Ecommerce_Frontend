@@ -12,7 +12,6 @@ export const createOrder = async (order: CreateOrder) => {
     });
 
     
-    console.log(await response.json());
     return response
 
 }

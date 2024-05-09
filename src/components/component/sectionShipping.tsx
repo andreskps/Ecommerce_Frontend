@@ -45,6 +45,7 @@ export default function SectionShipping() {
     const totalProducts = getInformations().subtotal;
 
     if (!discount) {
+      setPercentageDiscount(0);
       toast({
         title: "Error",
         description: "Código de descuento inválido",
@@ -54,6 +55,7 @@ export default function SectionShipping() {
     }
 
     if (totalProducts < discount.minimumAmount) {
+      setPercentageDiscount(0);
       toast({
         title: "Error",
         description: `El monto mínimo para aplicar el descuento es de ${discount.minimumAmount}`,
@@ -99,6 +101,7 @@ export default function SectionShipping() {
       lastName: data.lastName,
       phone: data.phone,
       namePet: data.namePet,
+      coupon: codeDiscount,
       variants: cart.map((item) => ({
         id: item.variant.id,
         quantity: item.quantity,
@@ -128,9 +131,61 @@ export default function SectionShipping() {
       className: "bg-green-500 text-white",
     });
   }
-  // if(cart.length === 0){
-  //   router.push('/cart');
-  // }
+
+  const handlePayMercadoPago = async () => {
+    const newOrder: CreateOrder = {
+      name: form.getValues("name"),
+      email: form.getValues("email"),
+      lastName: form.getValues("lastName"),
+      phone: form.getValues("phone"),
+      namePet: form.getValues("namePet"),
+      coupon: codeDiscount,
+      variants: cart.map((item) => ({
+        id: item.variant.id,
+        quantity: item.quantity,
+      })),
+      address: {
+        address: form.getValues("address"),
+        neighborhood: form.getValues("neighborhood"),
+        addressDetail: form.getValues("instructions"),
+        municipioId: parseInt(form.getValues("province")),
+      },
+    };
+
+    const response = await createOrder(newOrder);
+
+    if (!response.ok) {
+      toast({
+        title: "Error",
+        description: "Ha ocurrido un error al crear la orden",
+        className: "bg-red-500 text-white",
+      });
+      return;
+    }
+
+    const order = await response.json();
+
+    console.log(order)
+    try {
+      const responseMercadoPago = await fetch(`
+      ${process.env.NEXT_PUBLIC_API_URL}/api/payments`
+      , {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idOrder: order.id,
+        }),
+      });
+
+      const data = await responseMercadoPago.json();
+
+      router.push(data.url)
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto py-12 px-4">
@@ -233,6 +288,13 @@ export default function SectionShipping() {
                 size="lg"
               >
                 Confirmar pedido
+              </Button>
+              <Button
+                onClick={handlePayMercadoPago}
+                className="w-full bg-primario"
+                size="lg"
+              >
+                Pagar con MercadoPago
               </Button>
               <Input
                 type="text"
