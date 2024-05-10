@@ -19,11 +19,13 @@ import { createOrder } from "@/lib/api/orderApi";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "../ui/input";
 import { applyCodeDiscount } from "@/lib/api/codeDiscountApi";
+import { DialogDemo } from "../checkout/ModalConfirmPay";
 
 export default function SectionShipping() {
   const [isClient, setIsClient] = useState(false);
   const [codeDiscount, setCodeDiscount] = useState("");
   const [percentageDiscount, setPercentageDiscount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const setShipping = useShippingStore((state) => state.setShipping);
   const shipping = useShippingStore((state) => state.shipping);
@@ -121,24 +123,25 @@ export default function SectionShipping() {
   }
 
   async function onSubmit() {
-    const response = await createNewOrder();
+    // const response = await createNewOrder();
 
-    if (!response.ok) {
-      toast({
-        title: "Error",
-        description: "Ha ocurrido un error al crear la orden",
-        className: "bg-red-500 text-white",
-      });
-      return;
-    }
+    // if (!response.ok) {
+    //   toast({
+    //     title: "Error",
+    //     description: "Ha ocurrido un error al crear la orden",
+    //     className: "bg-red-500 text-white",
+    //   });
+    //   return;
+    // }
 
-    clearCart();
+    // clearCart();
+    setIsOpen(true)
 
-    toast({
-      title: "Orden creada",
-      description: "Tu orden ha sido creada exitosamente",
-      className: "bg-green-500 text-white",
-    });
+    // toast({
+    //   title: "Orden creada",
+    //   description: "Tu orden ha sido creada exitosamente",
+    //   className: "bg-green-500 text-white",
+    // });
   }
 
   const handlePayMercadoPago = async () => {
@@ -281,6 +284,7 @@ export default function SectionShipping() {
               >
                 Pago Contra Entrega
               </Button>
+              <DialogDemo isOpen={isOpen}/>
               <div className="w-full flex justify-center">
                 <Button
                   onClick={form.handleSubmit(handlePayMercadoPago)}
