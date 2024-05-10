@@ -29,6 +29,7 @@ interface State {
   getTotal: () => number;
   getInformations: () => { subtotal: number; shipping: number; total: number };
   getTotalItems: () => number;
+  clearCart: () => void;
 }
 
 export const useCartStore = create<State>()(
@@ -36,6 +37,9 @@ export const useCartStore = create<State>()(
     (set, get) => ({
       cart: [],
       priceShipping: 0,
+      clearCart: () => {
+        set({ cart: [] });
+      },
       getTotal: () => {
         const { cart } = get();
         return cart.reduce(
@@ -119,8 +123,9 @@ export const useCartStore = create<State>()(
       },
       setPriceShipping: (price: number) => {
         set({ priceShipping: price });
-      }
-  
+      },
+    
+
     }),
     {
       name: "cart-storage", // unique name

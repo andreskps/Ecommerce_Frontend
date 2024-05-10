@@ -32,6 +32,7 @@ export default function SectionShipping() {
   const shippingPrice = useCartStore((state) => state.priceShipping);
   const getInformations = useCartStore((state) => state.getInformations);
   const cart = useCartStore((state) => state.cart);
+  const clearCart= useCartStore((state)=> state.clearCart)
 
   const router = useRouter();
 
@@ -81,58 +82,20 @@ export default function SectionShipping() {
     setIsClient(true);
   }, []);
 
-  async function onSubmit(data: z.infer<typeof ShippingInfo>) {
+  async function createNewOrder() {
     setShipping({
-      address: data.address,
-      department: data.department,
-      email: data.email,
-      instructions: data.instructions,
-      lastName: data.lastName,
-      name: data.name,
-      neighborhood: data.neighborhood,
-      phone: data.phone,
-      province: data.province,
-      namePet: data.namePet,
+      address: form.getValues("address"),
+      department: form.getValues("department"),
+      email: form.getValues("email"),
+      instructions: form.getValues("instructions"),
+      lastName: form.getValues("lastName"),
+      name: form.getValues("name"),
+      neighborhood: form.getValues("neighborhood"),
+      phone: form.getValues("phone"),
+      province: form.getValues("province"),
+      namePet: form.getValues("namePet"),
     });
 
-    const newOrder: CreateOrder = {
-      name: data.name,
-      email: data.email,
-      lastName: data.lastName,
-      phone: data.phone,
-      namePet: data.namePet,
-      coupon: codeDiscount,
-      variants: cart.map((item) => ({
-        id: item.variant.id,
-        quantity: item.quantity,
-      })),
-      address: {
-        address: data.address,
-        neighborhood: data.neighborhood,
-        addressDetail: data.instructions,
-        municipioId: parseInt(data.province),
-      },
-    };
-
-    const response = await createOrder(newOrder);
-
-    if (!response.ok) {
-      toast({
-        title: "Error",
-        description: "Ha ocurrido un error al crear la orden",
-        className: "bg-red-500 text-white",
-      });
-      return;
-    }
-
-    toast({
-      title: "Orden creada",
-      description: "Tu orden ha sido creada exitosamente",
-      className: "bg-green-500 text-white",
-    });
-  }
-
-  const handlePayMercadoPago = async () => {
     const newOrder: CreateOrder = {
       name: form.getValues("name"),
       email: form.getValues("email"),
@@ -154,6 +117,33 @@ export default function SectionShipping() {
 
     const response = await createOrder(newOrder);
 
+    return response;
+  }
+
+  async function onSubmit() {
+    const response = await createNewOrder();
+
+    if (!response.ok) {
+      toast({
+        title: "Error",
+        description: "Ha ocurrido un error al crear la orden",
+        className: "bg-red-500 text-white",
+      });
+      return;
+    }
+
+    clearCart();
+
+    toast({
+      title: "Orden creada",
+      description: "Tu orden ha sido creada exitosamente",
+      className: "bg-green-500 text-white",
+    });
+  }
+
+  const handlePayMercadoPago = async () => {
+    const response = await createNewOrder();
+
     if (!response.ok) {
       toast({
         title: "Error",
@@ -165,23 +155,26 @@ export default function SectionShipping() {
 
     const order = await response.json();
 
-    console.log(order)
     try {
-      const responseMercadoPago = await fetch(`
-      ${process.env.NEXT_PUBLIC_API_URL}/api/payments`
-      , {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          idOrder: order.id,
-        }),
-      });
+      const responseMercadoPago = await fetch(
+        `
+      ${process.env.NEXT_PUBLIC_API_URL}/api/payments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idOrder: order.id,
+          }),
+        }
+      );
 
+
+      clearCart();
       const data = await responseMercadoPago.json();
 
-      router.push(data.url)
+      router.push(data.url);
     } catch (error) {
       console.log(error);
     }
@@ -281,34 +274,41 @@ export default function SectionShipping() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex flex-col items-center space-y-4">
               <Button
                 onClick={form.handleSubmit(onSubmit)}
                 className="w-full bg-primario"
-                size="lg"
               >
-                Confirmar pedido
+                Pago Contra Entrega
               </Button>
-              <Button
-                onClick={handlePayMercadoPago}
-                className="w-full bg-primario"
-                size="lg"
-              >
-                Pagar con MercadoPago
-              </Button>
-              <Input
-                type="text"
-                value={codeDiscount}
-                onChange={(e) => setCodeDiscount(e.target.value)}
-                placeholder="Código de descuento"
-                className="mt-6 w-full"
-              />
-              <button
-                onClick={handleCodeDiscount}
-                className="mt-2 w-full rounded-md bg-primario py-1.5 font-medium text-blue-50 "
-              >
-                Aplicar
-              </button>
+              <div className="w-full flex justify-center">
+                <Button
+                  onClick={form.handleSubmit(handlePayMercadoPago)}
+                  className="flex items-center justify-center"
+                >
+                  <img
+                    src="https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
+                    alt="Mercado Pago"
+                    style={{ width: "100px", marginRight: "10px" }}
+                  />
+                  Pagar con Mercado Pago
+                </Button>
+              </div>
+              <div className="w-full flex justify-center space-x-2">
+                <Input
+                  type="text"
+                  value={codeDiscount}
+                  onChange={(e) => setCodeDiscount(e.target.value)}
+                  placeholder="Código de descuento"
+                  className="flex-grow"
+                />
+                <Button
+                  onClick={handleCodeDiscount}
+                  className="rounded-md bg-primario py-1.5 font-medium text-blue-50"
+                >
+                  Aplicar
+                </Button>
+              </div>
             </CardFooter>
           </Card>
         ) : (
