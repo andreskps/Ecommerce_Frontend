@@ -26,6 +26,7 @@ export default function SectionShipping() {
   const [codeDiscount, setCodeDiscount] = useState("");
   const [percentageDiscount, setPercentageDiscount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const setShipping = useShippingStore((state) => state.setShipping);
   const shipping = useShippingStore((state) => state.shipping);
@@ -34,7 +35,7 @@ export default function SectionShipping() {
   const shippingPrice = useCartStore((state) => state.priceShipping);
   const getInformations = useCartStore((state) => state.getInformations);
   const cart = useCartStore((state) => state.cart);
-  const clearCart= useCartStore((state)=> state.clearCart)
+  const clearCart = useCartStore((state) => state.clearCart);
 
   const router = useRouter();
 
@@ -84,7 +85,7 @@ export default function SectionShipping() {
     setIsClient(true);
   }, []);
 
-  async function createNewOrder() {
+  async function createNewOrder(paymentMethod: string) {
     setShipping({
       address: form.getValues("address"),
       department: form.getValues("department"),
@@ -105,6 +106,7 @@ export default function SectionShipping() {
       phone: form.getValues("phone"),
       namePet: form.getValues("namePet"),
       coupon: codeDiscount,
+      paymentMethod: paymentMethod,
       variants: cart.map((item) => ({
         id: item.variant.id,
         quantity: item.quantity,
@@ -123,19 +125,21 @@ export default function SectionShipping() {
   }
 
   async function onSubmit() {
-    // const response = await createNewOrder();
+    setLoading(true);
+    const response = await createNewOrder("Pago contra entrega");
 
-    // if (!response.ok) {
-    //   toast({
-    //     title: "Error",
-    //     description: "Ha ocurrido un error al crear la orden",
-    //     className: "bg-red-500 text-white",
-    //   });
-    //   return;
-    // }
+    if (!response.ok) {
+      toast({
+        title: "Error",
+        description: "Ha ocurrido un error al crear la orden",
+        className: "bg-red-500 text-white",
+      });
+      return;
+    }
 
-    // clearCart();
-    setIsOpen(true)
+    setLoading(false);
+    clearCart();
+    setIsOpen(true);
 
     // toast({
     //   title: "Orden creada",
@@ -145,7 +149,8 @@ export default function SectionShipping() {
   }
 
   const handlePayMercadoPago = async () => {
-    const response = await createNewOrder();
+    setLoading(true);
+    const response = await createNewOrder("Mercado Pago");
 
     if (!response.ok) {
       toast({
@@ -173,8 +178,8 @@ export default function SectionShipping() {
         }
       );
 
-
       clearCart();
+      setLoading(false);
       const data = await responseMercadoPago.json();
 
       router.push(data.url);
@@ -280,15 +285,19 @@ export default function SectionShipping() {
             <CardFooter className="flex flex-col items-center space-y-4">
               <Button
                 onClick={form.handleSubmit(onSubmit)}
-                className="w-full bg-primario"
+                className={`w-full bg-primario ${loading ? "opacity-50" : ""}`}
+                disabled={loading}
               >
                 Pago Contra Entrega
               </Button>
-              <DialogDemo isOpen={isOpen}/>
+
               <div className="w-full flex justify-center">
                 <Button
                   onClick={form.handleSubmit(handlePayMercadoPago)}
-                  className="flex items-center justify-center"
+                  className={`flex items-center justify-center ${
+                    loading ? "opacity-50" : ""
+                  }`}
+                  disabled={loading}
                 >
                   <img
                     src="https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
@@ -321,6 +330,8 @@ export default function SectionShipping() {
           </div>
         )}
       </div>
+
+      <DialogDemo isOpen={isOpen} />
     </div>
   );
 }
