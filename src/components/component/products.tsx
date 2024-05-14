@@ -7,6 +7,8 @@ import { Filters } from "../native/filters/filters";
 import ProductsList from "../native/products/productsList";
 import { getCategories } from "@/lib/api/categoriesApi";
 import { getBrands } from "@/lib/api/brandsApi";
+import { CategoriesMobile } from "../pet/categoriesMobile";
+import { FiltersMobile } from "../pet/filtersMobile";
 
 interface Props {
   title: string;
@@ -26,11 +28,16 @@ export async function ProductsByPet({
     getCategories(),
   ]);
 
+
   return (
     <div className="container mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 px-4 md:px-6 py-12 md:py-24">
       <div className="md:flex md:flex-col gap-6 hidden">
         <Categories categories={categories} />
         <Filters brands={brands} />
+      </div>
+      <div className="md:hidden flex flex-col ">
+        <CategoriesMobile categories={categories} />
+        <FiltersMobile brands={brands}/>
       </div>
       <div className="">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">

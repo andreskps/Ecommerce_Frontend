@@ -79,6 +79,7 @@ export function FiltersMobile({ subcategories, categories }: Props) {
 
   return (
     <div className="md:hidden flex gap-5">
+  
       <Select onValueChange={handleCategoryChange}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Seleccionar categoría" />
