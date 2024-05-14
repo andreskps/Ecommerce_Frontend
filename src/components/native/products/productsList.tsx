@@ -8,13 +8,11 @@ interface Props {
 }
 
 const ProductsList = ({ products }: Props) => {
-  console.log(products);
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {products.map((product, i) => (
         <>
           <div className="relative group flex flex-col items-stretch" key={i}>
-  
             <Link
               className="absolute inset-0 z-10"
               href={`/product/${product.slug}`}
@@ -36,12 +34,11 @@ const ProductsList = ({ products }: Props) => {
             <div className="grid gap-1">
               <h3 className="font-semibold">{product.title}</h3>
               <p className="text-sm leading-none">30.000$</p>
-              {
-                product.discount && (
-                  <p className="text-sm leading-none line-through text-gray-500">40.000$</p>
-                )
-              
-              }
+              {product.discount && (
+                <p className="text-sm leading-none line-through text-gray-500">
+                  40.000$
+                </p>
+              )}
             </div>
             {/* <Button className="bg-primario mt-2 w-full">Ver producto</Button> */}
           </div>
