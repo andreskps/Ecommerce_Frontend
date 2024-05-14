@@ -26,4 +26,5 @@ export interface Product {
 
 export interface ProductsResponse {
   products: Product[];
+  total: number;
 }

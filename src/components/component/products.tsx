@@ -9,9 +9,11 @@ import { getCategories } from "@/lib/api/categoriesApi";
 import { getBrands } from "@/lib/api/brandsApi";
 import { CategoriesMobile } from "../pet/categoriesMobile";
 import { FiltersMobile } from "../pet/filtersMobile";
+import { PaginationProducts } from "./pagination";
 
 interface Props {
   title: string;
+  cantPages: number;
   description: string;
   products: Product[];
   subcategory?: string;
@@ -22,6 +24,7 @@ export async function ProductsByPet({
   description,
   products,
   subcategory,
+  cantPages
 }: Props) {
   const [brands, categories] = await Promise.all([
     getBrands(),
@@ -52,7 +55,7 @@ export async function ProductsByPet({
           </div>
           <ProductsList products={products} />
         </div>
-        {/* <PaginationProducts /> */}
+        <PaginationProducts total={cantPages} />
       </div>
     </div>
   );

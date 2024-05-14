@@ -7,6 +7,7 @@ import { FiltersMobile } from "@/components/category/FiltersMobile";
 import { getCategories } from "@/lib/api/categoriesApi";
 import { getProductsByCategory } from "@/lib/api/productsApi";
 import { ProductsGrid } from "@/components/native/products/productsGrid";
+import { PaginationProducts } from "@/components/component/pagination";
 interface Props {
   params: {
     slug: string;
@@ -19,7 +20,7 @@ interface Props {
 export default async function CategoryPage({ params, searchParams }: Props) {
   const { slug } = params;
 
-  const { subcategory = "", pet = "" } = searchParams;
+  const { subcategory = "", pet = "", page = 1 } = searchParams;
 
   const categories = await getCategories();
 
@@ -30,13 +31,23 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   if (!category) {
     notFound();
   }
- 
 
-  const products = await getProductsByCategory({
+  const response = await getProductsByCategory({
     category: category.name,
     subcategory: subcategory as string,
     pet: pet as string,
+    page: parseInt(page as string),
   });
+
+  if (!response.ok) {
+    return notFound();
+  }
+
+  const data = await response.json();
+
+  const products: Product[] = data.products;
+
+  const totalPages = Math.ceil(data.total / 3);
 
   return (
     <div className="container mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 px-4 md:px-6 py-12 md:py-24">
@@ -61,8 +72,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             <p className="max-w-[900px] text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400"></p>
           </div>
           <ProductsList products={products} />
-          {/* <ProductsGrid/> */}
         </div>
+        <PaginationProducts total={totalPages} />
       </div>
     </div>
   );
