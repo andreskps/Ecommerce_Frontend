@@ -13,6 +13,7 @@ export default function Carousel() {
         'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/haapscdd7dlgbvgzxz2o.jpg',
         'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/nh4sifiegt9txnzjdelz.jpg',
         'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444959/banners/cuzw32mev1v0fhywnolq.png',
+        'https://res.cloudinary.com/dftvxcvfw/image/upload/v1715703211/banners/hcswpfkquicpi08dbppn.jpg'
     ]
 
 

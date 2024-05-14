@@ -3,13 +3,21 @@ interface ProductImage {
   url: string;
 }
 
+interface ProductVariant {
+  id: number;
+  price: string;
+  stock: number;
+  isActive: boolean;
+}
+
 interface Discount {
   id: number;
   name: string;
   percentage: number;
   isActive: boolean;
-  expiresAt: string;
-  startsAt: string;
+  expiresAt: null | string;
+  startsAt: null | string;
+  deletedAt: null | string;
 }
 
 export interface Product {
@@ -20,11 +28,13 @@ export interface Product {
   isActive: boolean;
   isPopular: boolean;
   isNew: boolean;
+  discount: null | Discount;
   productImages: ProductImage[];
-  discount: Discount | null;
+  productVariants: ProductVariant[];
 }
 
 export interface ProductsResponse {
   products: Product[];
   total: number;
 }
+
