@@ -23,16 +23,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider
-      children={
-        <html lang="en">
-          <body className={inter.className}>{children}
+    <AuthProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          {children}
 
-          <Toaster/>
-          
-          </body>
-        </html>
-      }
-    ></AuthProvider>
+          <Toaster />
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

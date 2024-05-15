@@ -91,7 +91,9 @@ export const FormShippingLocation = ({ form }: Props) => {
                     </SelectTrigger>
                     <SelectContent>
                       {departamentos?.map((location) => (
-                        <SelectItem value={location.id.toString()}>
+                        <SelectItem value={location.id.toString()}
+                        key={location.id.toString()}
+                        >
                           {location.name}
                         </SelectItem>
                       ))}
@@ -128,7 +130,9 @@ export const FormShippingLocation = ({ form }: Props) => {
                             location.id.toString() === selectedDepartment
                         )
                         ?.municipios.map((ciudad) => (
-                          <SelectItem value={ciudad.id.toString()}>
+                          <SelectItem
+                            key={ciudad.id.toString()}
+                           value={ciudad.id.toString()}>
                             {ciudad.name}
                           </SelectItem>
                         ))}

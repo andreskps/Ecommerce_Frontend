@@ -22,6 +22,7 @@ import { applyCodeDiscount } from "@/lib/api/codeDiscountApi";
 import { DialogDemo } from "../checkout/ModalConfirmPay";
 import Image from "next/image";
 
+
 export default function SectionShipping() {
   const [isClient, setIsClient] = useState(false);
   const [codeDiscount, setCodeDiscount] = useState("");
@@ -300,9 +301,11 @@ export default function SectionShipping() {
                   }`}
                   disabled={loading}
                 >
-                  <img
+                  <Image
                     src="https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
                     alt="Mercado Pago"
+                    width={100}
+                    height={30}
                     style={{ width: "100px", marginRight: "10px" }}
                   />
                   Pagar con Mercado Pago

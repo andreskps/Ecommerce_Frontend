@@ -5,6 +5,7 @@
  */
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export  function SectionCategories() {
   const categories = [
@@ -70,7 +71,7 @@ export  function SectionCategories() {
                 <Link className="absolute inset-0 z-10" href={category.link}>
                   <span className="sr-only">Ver Categoría</span>
                 </Link>
-                <img
+                <Image
                   alt={category.title}
                   className="rounded-lg object-contain w-full aspect-[3/4]"
                   height={600}
