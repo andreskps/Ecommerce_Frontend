@@ -1,6 +1,7 @@
 import { Product } from "@/app/interface/products/ProductsResponse";
 import { Button } from "@/components/ui/button";
 import { currencyFormat } from "@/lib/currencyFormat";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -21,10 +22,12 @@ const ProductsList = ({ products }: Props) => {
               <span className="sr-only">Ver Producto</span>
             </Link>
             <div className="flex-grow">
-              <img
+              <Image
                 alt={product.title}
                 className="rounded-lg object-contain w-full h-full group-hover:opacity-50 transition-opacity"
                 src={product.productImages[0].url}
+                width={500}
+                height={500}
               />
               {/* <div className="absolute left-3 top-3">
                 <p className="sm:px-3 sm:py-1.5 px-1.5 py-1 text-[8px] sm:text-xs font-bold tracking-wide text-white uppercase bg-primario rounded-full">

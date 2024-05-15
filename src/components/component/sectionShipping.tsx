@@ -20,6 +20,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "../ui/input";
 import { applyCodeDiscount } from "@/lib/api/codeDiscountApi";
 import { DialogDemo } from "../checkout/ModalConfirmPay";
+import Image from "next/image";
 
 export default function SectionShipping() {
   const [isClient, setIsClient] = useState(false);
@@ -207,7 +208,7 @@ export default function SectionShipping() {
               {cart.map((item) => (
                 <>
                   <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4">
-                    <img
+                    <Image
                       alt="Producto"
                       className="rounded-md"
                       height={80}
@@ -267,7 +268,7 @@ export default function SectionShipping() {
                 <div className="col-span-2 font-medium">Envío</div>
                 <div className="text-right">
                   {getInformations().shipping === 0
-                    ? "Gratis"
+                    ? "Ingresa tu dirección para calcular el envío"
                     : currencyFormat(getInformations().shipping)}
                 </div>
               </div>

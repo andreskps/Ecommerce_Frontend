@@ -4,6 +4,9 @@ import { CarouselDemo } from "../corousel";
 import { useState, useEffect } from "react";
 import { BackButton } from "./backButton";
 import { CartItem, useCartStore } from "@/store/cart-store";
+import { currencyFormat } from "@/lib/currencyFormat";
+import { Star } from "lucide-react";
+import { useToast } from "../ui/use-toast";
 
 interface Image {
   id: number;
@@ -33,6 +36,7 @@ interface Product {
   slug: string;
   isActive: boolean;
   isPopular: boolean;
+  isLowStock: boolean;
   variants: Variant[];
   discount: Discount;
   images: Image[];
@@ -43,9 +47,14 @@ interface Props {
 }
 
 export default function SectionProduct({ product }: Props) {
+
   const [quantity, setQuantity] = useState(1);
-  const discountPrice = product.discount?.percentage / 100;
+  const discountPrice =
+    product.discount?.percentage === null
+      ? 0
+      : product.discount?.percentage / 100;
   const addToCart = useCartStore((state) => state.addToCart);
+  const { toast } = useToast();
 
   const [variantSelected, setVariantSelected] = useState<Variant>(
     product.variants[0]
@@ -56,11 +65,11 @@ export default function SectionProduct({ product }: Props) {
   };
 
   const handleAddToCart = () => {
-
-    const unitPrice = variantSelected.price-(variantSelected.price*discountPrice);
+    const unitPrice =
+      variantSelected.price - variantSelected.price * discountPrice;
     const totalPrice = unitPrice * quantity;
 
-    const productCart:CartItem = {
+    const productCart: CartItem = {
       idProduct: product.id,
       slug: product.slug,
       title: product.title,
@@ -72,13 +81,18 @@ export default function SectionProduct({ product }: Props) {
         unitPrice: unitPrice,
       },
       image: product.images[0].url,
-    }
+    };
 
     addToCart(productCart);
 
-     setQuantity(1);
+    setQuantity(1);
 
-     alert("Producto añadido al carrito");
+    toast({
+      title: "Producto añadido al carrito",
+      description: `${product.title} x ${quantity}`,
+      className: "bg-green-500 text-zinc-50",
+      duration: 1000,
+    });
   };
 
   return (
@@ -91,23 +105,36 @@ export default function SectionProduct({ product }: Props) {
             {product.title}
           </h1>
 
+          <div className="flex">
+            {[...Array(5)].map((_, i) => (
+                 <svg
+                 key={i}
+                 className="w-4 h-4 fill-current text-yellow-500"
+                 xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+               >
+                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.15l-5-4.88 6.91-1.01L12 2z" />
+               </svg>
+            ))}
+          </div>
+
           <p className="text-xl md:text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-            {discountPrice
-              ? `$${
+            {discountPrice > 0
+              ? `${currencyFormat(
                   variantSelected.price - variantSelected.price * discountPrice
-                }`
-              : `$${variantSelected.price}`}
+                )}`
+              : `${currencyFormat(variantSelected.price)}`}
           </p>
-          {product.discount && (
+          {product.discount.percentage !== null && (
             <p className="text-sm text-gray-500 dark:text-gray-400">
               <span className="line-through text-zinc-500 dark:text-zinc-400">
-                ${variantSelected.price}
+                {currencyFormat(variantSelected.price)}
               </span>{" "}
               {product.discount.percentage}% de descuento
             </p>
           )}
 
-          <h4 className="font-bold ">Seleccione una presentacion</h4>
+          <h4 className="font-bold ">Seleccione una presentación</h4>
           <div className="flex space-x-2">
             {product.variants.map((variant) => (
               <Button
@@ -124,9 +151,14 @@ export default function SectionProduct({ product }: Props) {
               </Button>
             ))}
           </div>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          {/* <p className="text-sm text-zinc-500 dark:text-zinc-400">
             {variantSelected.stock} in stock
-          </p>
+          </p> */}
+          {product.isLowStock && (
+            <p className="text-sm text-red-500 dark:text-red-400">
+              ¡Ultimas unidades!
+            </p>
+          )}
 
           <div className="mt-2">
             <label
@@ -146,9 +178,10 @@ export default function SectionProduct({ product }: Props) {
             />
           </div>
 
-          <Button 
+          <Button
             onClick={handleAddToCart}
-          className="w-full h-12 rounded-md bg-primario text-zinc-50 shadow-sm hover:bg-none">
+            className="w-full h-12 rounded-md bg-primario text-zinc-50 shadow-sm hover:bg-none"
+          >
             Añadir al carrito
           </Button>
 

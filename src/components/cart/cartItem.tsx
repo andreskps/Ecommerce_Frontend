@@ -2,6 +2,7 @@
 import React from "react";
 import { useCartStore } from "@/store/cart-store";
 import { Trash2, CirclePlus, CircleMinus } from "lucide-react";
+import Image from "next/image";
 
 interface Props {
   productId: string;
@@ -35,7 +36,7 @@ export const CartItem = ({
 
   return (
     <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-      <img
+      <Image
         src={image}
         alt="product-image"
         className="w-full rounded-lg sm:w-40"
