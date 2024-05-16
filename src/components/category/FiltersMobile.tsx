@@ -74,6 +74,7 @@ export function FiltersMobile({ subcategories, categories }: Props) {
       params.set(key, value as string);
     }
 
+    params.set('page', '1');
     router.push(pathname + "?" + params.toString());
   };
 

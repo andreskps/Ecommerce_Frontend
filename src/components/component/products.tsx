@@ -42,21 +42,23 @@ export async function ProductsByPet({
         <CategoriesMobile categories={categories} />
         <FiltersMobile brands={brands}/>
       </div>
-      <div className="">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-              {title}
-            </h2>
-            <p className="max-w-[900px] text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400">
-              {description}
-            </p>
-            <p className="text-sm text-gray-500">{subcategory}</p>
-          </div>
-          <ProductsList products={products} />
-        </div>
-        <PaginationProducts total={cantPages} />
-      </div>
+    
+      <div className="flex flex-col items-center justify-center space-y-4 text-center">
+  <div className="space-y-2">
+    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+      {title}
+    </h2>
+    <p className="max-w-[900px] text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400">
+      {description}
+    </p>
+    <p className="text-sm text-gray-500">{subcategory}</p>
+  </div>
+  <ProductsList products={products} />
+  <div className="flex justify-center w-full">
+    <PaginationProducts total={cantPages} />
+  </div>
+</div>
     </div>
+   
   );
 }

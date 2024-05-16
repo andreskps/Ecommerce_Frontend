@@ -72,8 +72,11 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             <p className="max-w-[900px] text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400"></p>
           </div>
           <ProductsList products={products} />
+          <div className="flex justify-center w-full">
+            <PaginationProducts total={totalPages} />
+            </div>
         </div>
-        <PaginationProducts total={totalPages} />
+     
       </div>
     </div>
   );

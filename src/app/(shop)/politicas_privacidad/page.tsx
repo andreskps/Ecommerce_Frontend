@@ -201,7 +201,9 @@ export default function PoliticasPrivadidadPage() {
             Para ejercer cualquiera de los derechos mencionados anteriormente,
             puedes ponerte en contacto con nuestro equipo de atención al cliente
             a través de los siguientes medios:
-            <ul className="list-disc list-inside">
+          </p>
+
+          <ul className="list-disc list-inside">
               <li>
                 Correo electrónico: [Dirección de correo electrónico de atención
                 al cliente]
@@ -211,11 +213,8 @@ export default function PoliticasPrivadidadPage() {
                 Formulario de contacto en nuestro sitio web: [Enlace al
                 formulario de contacto]
               </li>
+
             </ul>
-            Cuando nos contactes para ejercer tus derechos, por favor
-            proporciona la información necesaria para que podamos identificarte
-            y procesar tu solicitud de manera adecuada.
-          </p>
         </div>
 
         <div>

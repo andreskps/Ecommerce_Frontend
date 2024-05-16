@@ -31,8 +31,12 @@ export const getProductsByPet = async (params: ParamsByPet) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/products/byPet/${params.pet}?subcategory=${params.subcategory}&brand=${params.brand}&page=${params.page}`,
     {
-      method: "GET",
-      cache: "no-cache",
+      next:{
+        // revalidate: 4200,
+      
+      }
+      ,
+      cache: "no-store",
     }
   );
   // const products:Product[] = await response.json();

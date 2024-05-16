@@ -46,7 +46,12 @@ export const CategoryItem = ({ category }:CategoryItemProps ) => {
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
- 
+  
+      // Si cambia la subcategoría, establece la página a 1
+      if (name === 'subcategory') {
+        params.set('page', '1')
+      }
+  
       return params.toString()
     },
     [searchParams]

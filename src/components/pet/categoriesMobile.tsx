@@ -46,7 +46,7 @@ export const CategoriesMobile = ({ categories }: Props) => {
   );
 
   const handleSubcategory = (value: string) => {
-    router.push(pathname + "?" + createQueryString("subcategory", value));
+    router.push(`${pathname}?subcategory=${value}`);
   };
 
   return (

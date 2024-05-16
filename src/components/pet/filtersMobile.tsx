@@ -48,6 +48,7 @@ export const FiltersMobile = ({ brands }: Props) => {
     for (const [key, value] of Object.entries(changes)) {
       params.set(key, value as string);
     }
+    params.set("page", "1");
     router.push(pathname + "?" + params.toString());
   };
   return (
