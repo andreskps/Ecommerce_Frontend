@@ -39,6 +39,8 @@ export const CartItem = ({
       <Image
         src={image}
         alt="product-image"
+        width={100}
+        height={100}
         className="w-full rounded-lg sm:w-40"
       />
       <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">

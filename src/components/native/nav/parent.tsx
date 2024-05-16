@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cart-store";
 import { useEffect, useState } from "react";
+import { Truck } from 'lucide-react';
 export default function Header() {
   const { data: session, status } = useSession();
 
@@ -28,6 +29,10 @@ export default function Header() {
 
   return (
     <header className="bg-primario sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur mb-4 px-[1.4rem] md:px-[4rem] lg:px-[6rem] xl:px-[8rem] 2xl:px-[12rem]">
+          <div className="bg-primario text-center py-2 text-white">
+            <Truck className="w-5 h-5 inline-block" />
+            <p className="text-xs">Envíos gratis en compras mayores a $500</p>
+</div>
       <div className="flex h-14 items-center">
         <MainNav />
         <MobileNav />
