@@ -1,20 +1,31 @@
 'use client'
 
+import { Banner } from '@/app/interface/banners/banner.interface'
 import { cn } from '@/lib/utils'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-export default function Carousel() {
 
-    const images = [
-        'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/gr6qarexcpvwvlghaxnh.jpg',
-        'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/haapscdd7dlgbvgzxz2o.jpg',
-        'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/nh4sifiegt9txnzjdelz.jpg',
-        'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444959/banners/cuzw32mev1v0fhywnolq.png',
-        'https://res.cloudinary.com/dftvxcvfw/image/upload/v1715703211/banners/hcswpfkquicpi08dbppn.jpg'
-    ]
+
+interface PropsCarousel{
+     banners:Banner[]
+}
+
+
+
+
+export default function Carousel({banners}:PropsCarousel) {
+
+
+   //  const images = [
+   //      'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/gr6qarexcpvwvlghaxnh.jpg',
+   //      'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/haapscdd7dlgbvgzxz2o.jpg',
+   //      'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444355/banners/nh4sifiegt9txnzjdelz.jpg',
+   //      'https://res.cloudinary.com/dftvxcvfw/image/upload/v1713444959/banners/cuzw32mev1v0fhywnolq.png',
+   //      'https://res.cloudinary.com/dftvxcvfw/image/upload/v1715703211/banners/hcswpfkquicpi08dbppn.jpg'
+   //  ]
 
 
    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({
@@ -40,14 +51,14 @@ export default function Carousel() {
       <>
          <div className="overflow-hidden rounded-lg" ref={emblaRef}>
             <div className="flex">
-               {images.map((src, i) => (
-                  <div className="relative h-96 flex-[0_0_100%]" key={i}>
-                     <Image src={src} fill className="object-cover" alt="" />
+               {banners.map((banner, i) => (
+                  <div className="relative h-96 flex-[0_0_100%]" key={banner.id}>
+                     <Image src={banner.urlImg} fill className="object-cover" alt={banner.name} />
                   </div>
                ))}
             </div>
          </div>
-         <Dots itemsLength={images.length} selectedIndex={selectedIndex} />
+         <Dots itemsLength={banners.length} selectedIndex={selectedIndex} />
       </>
    )
 }
