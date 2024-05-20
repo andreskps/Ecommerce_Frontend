@@ -47,13 +47,7 @@ export function NavMenu() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/products" legacyBehavior passHref>
-            <NavigationMenuLink className=" inline-flex  rounded-sm  h-10 w-max items-center justify-center text-sm font-medium px-4 py-2 text-white hover:bg-white hover:text-black">
-              <div className="font-medium">Ofertas</div>
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+      
 
       </NavigationMenuList>
     </NavigationMenu>

@@ -7,6 +7,16 @@ import { SectionProducts } from "@/components/home/sections/SectionProducts";
 import { config } from "@/config/site";
 import { Banner } from "../interface/banners/banner.interface";
 
+
+
+
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title:  'Inicio',
+  description: `Descubre los mejores productos para mascotas en ${config.name} Ofrecemos alimentos saludables, juguetes divertidos y accesorios únicos para perros, gatos y más. Envío rápido y atención personalizada. ¡Compra ahora y da lo mejor a tu mascota!`,
+}
+
 export default async function Home() {
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/banners`, {

@@ -6,9 +6,6 @@ import { ShoppingCart } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
   LogInIcon,
-  MoonIcon,
-  ShoppingBasketIcon,
-  SunIcon,
   UserIcon,
 } from "lucide-react";
 // import { useTheme } from 'next-themes'
@@ -31,7 +28,7 @@ export default function Header() {
     <header className="bg-primario sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur mb-4 px-[1.4rem] md:px-[4rem] lg:px-[6rem] xl:px-[8rem] 2xl:px-[12rem]">
           <div className="bg-primario text-center py-2 text-white">
             <Truck className="w-5 h-5 inline-block" />
-            <p className="text-xs">Envíos gratis en compras mayores a $500</p>
+            <p className="text-xl">¡Compra ahora y paga al recibir! </p>
 </div>
       <div className="flex h-14 items-center">
         <MainNav />

@@ -17,6 +17,29 @@ interface Props {
   };
 }
 
+export async function generateMetadata(
+  { params, searchParams }: Props
+) {
+  const { slug } = params;
+
+  const categories = await getCategories();
+
+  const category = categories.find(
+    (category) => category.name.toLowerCase() === slug
+  );
+
+  if (!category) {
+    notFound();
+  }
+
+  return {
+    title: category.name,
+    description: `Encuentra los mejores productos para ${category.name} en nuestra tienda online.`,
+  };
+}
+
+
+
 export default async function CategoryPage({ params, searchParams }: Props) {
   const { slug } = params;
 

@@ -25,10 +25,6 @@ export const docsConfig: DocsConfig = {
          title: 'Gatos',
          href: '/pet/gato',
       },
-      {
-         title: 'Ofertas',
-         href: '/products',
-      }
    ],
    sidebarNav: [
       {

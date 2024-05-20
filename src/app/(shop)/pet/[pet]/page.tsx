@@ -4,6 +4,7 @@ import {
 } from "@/app/interface/products/ProductsResponse";
 import { ProductsByPet } from "@/components/component/products";
 import { getProductsByPet } from "@/lib/api/productsApi";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -13,6 +14,22 @@ interface Props {
   };
   searchParams: {
     [key: string]: string | string[] | undefined;
+  };
+}
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { pet } = params;
+  const selectedPet = pets.find((p) => p.name === pet);
+  const { subcategory = "", brand = "" } = searchParams;
+  const title = selectedPet?.title;
+  const description = selectedPet?.description;
+
+  return {
+    title: `Productos para ${title}`,
+    description: `Encuentra los mejores productos para ${title} en nuestra tienda online.`,
   };
 }
 
@@ -54,14 +71,17 @@ export default async function PetPage({ params, searchParams }: Props) {
   const products = data.products;
   const totalPages = Math.ceil(data.total / 10);
   return (
-    <Suspense fallback={
-      <div  className="bg-primario " >
-  <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
-  
-  </svg>
-  <span className="text-white">Cargando...</span>
-</div>
-    }>
+    <Suspense
+      fallback={
+        <div className="bg-primario ">
+          <svg
+            className="animate-spin h-5 w-5 mr-3 ..."
+            viewBox="0 0 24 24"
+          ></svg>
+          <span className="text-white">Cargando...</span>
+        </div>
+      }
+    >
       <ProductsByPet
         cantPages={totalPages}
         products={products}
