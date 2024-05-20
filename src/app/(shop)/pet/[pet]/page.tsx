@@ -52,7 +52,7 @@ export default async function PetPage({ params, searchParams }: Props) {
 
   const data: ProductsResponse = await response.json();
   const products = data.products;
-  const totalPages = Math.ceil(data.total / 3);
+  const totalPages = Math.ceil(data.total / 10);
   return (
     <Suspense fallback={
       <div  className="bg-primario " >

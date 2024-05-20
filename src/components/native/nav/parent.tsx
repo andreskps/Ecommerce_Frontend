@@ -20,11 +20,11 @@ import { Truck } from 'lucide-react';
 export default function Header() {
   const { data: session, status } = useSession();
 
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    setLoaded(true);
-  }, [])
+  // useEffect(() => {
+  //   setLoaded(true);
+  // }, [])
   
 
   return (
@@ -38,7 +38,7 @@ export default function Header() {
         <MobileNav />
         <div className="flex flex-1 items-center space-x-2 justify-end">
           <div className="flex-none">{/* <CommandMenu /> */}</div>
-          {status === "loading" ? (
+          {/* {status === "loading" ? (
             <p>Loading...</p>
           ) : session ? (
             <UserNav />
@@ -48,7 +48,8 @@ export default function Header() {
 
           {
             loaded && <CartNav />
-          }
+          } */}
+          <CartNav/>
           {/* <ThemeToggle /> */}
          
           {/* {session ? <UserNav /> : <LoginDialog />} */}

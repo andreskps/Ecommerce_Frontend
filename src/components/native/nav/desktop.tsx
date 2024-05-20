@@ -55,24 +55,6 @@ export function NavMenu() {
           </Link>
         </NavigationMenuItem>
 
-        {/* <NavigationMenuItem>
-               <NavigationMenuTrigger>
-                  <div className="font-normal text-foreground/70">Brands</div>
-               </NavigationMenuTrigger>
-               <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-2 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                     {components.map((component) => (
-                        <ListItem
-                           key={component.title}
-                           title={component.title}
-                           href={component.href}
-                        >
-                           {component.description}
-                        </ListItem>
-                     ))}
-                  </ul>
-               </NavigationMenuContent>
-            </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   );
