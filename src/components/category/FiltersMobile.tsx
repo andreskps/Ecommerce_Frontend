@@ -24,6 +24,14 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState, useEffect } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface Props {
   categories: Category[];
@@ -48,6 +56,8 @@ export function FiltersMobile({ subcategories, categories }: Props) {
     setPet(searchParams.get("pet") || "all");
     setSubcategory(searchParams.get("subcategory") || "all");
   }, [searchParams]);
+
+
 
 
 
@@ -79,13 +89,16 @@ export function FiltersMobile({ subcategories, categories }: Props) {
   };
 
   return (
-    <div className="md:hidden flex gap-5">
-  
-      <Select onValueChange={handleCategoryChange}>
+    <div className="md:hidden flex gap-5 relative z-30">
+
+      <Select
+
+
+       onValueChange={handleCategoryChange}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Seleccionar categoría" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="">
           {categories.map((category, i) => (
             <SelectItem key={category.id} value={category.name}>
               {category.name}
@@ -93,6 +106,7 @@ export function FiltersMobile({ subcategories, categories }: Props) {
           ))}
         </SelectContent>
       </Select>
+     
       <Sheet>
         <SheetTrigger asChild>
           <Button className="md:hidden bg-black">

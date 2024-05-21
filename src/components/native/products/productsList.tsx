@@ -24,7 +24,7 @@ const ProductsList = ({ products }: Props) => {
             <div className="flex-grow">
               <Image
                 alt={product.title}
-                className="rounded-lg object-contain w-full h-full group-hover:opacity-50 transition-opacity"
+                className="rounded-lg object-contain w-full h-full md:group-hover:opacity-50 transition-opacity"
                 src={product.productImages[0].url}
                 width={500}
                 height={500}

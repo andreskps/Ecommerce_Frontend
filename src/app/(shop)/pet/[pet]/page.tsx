@@ -71,17 +71,17 @@ export default async function PetPage({ params, searchParams }: Props) {
   const products = data.products;
   const totalPages = Math.ceil(data.total / 10);
   return (
-    <Suspense
-      fallback={
-        <div className="bg-primario ">
-          <svg
-            className="animate-spin h-5 w-5 mr-3 ..."
-            viewBox="0 0 24 24"
-          ></svg>
-          <span className="text-white">Cargando...</span>
-        </div>
-      }
-    >
+    // <Suspense
+    //   fallback={
+    //     <div className="bg-primario ">
+    //       <svg
+    //         className="animate-spin h-5 w-5 mr-3 ..."
+    //         viewBox="0 0 24 24"
+    //       ></svg>
+    //       <span className="text-white">Cargando...</span>
+    //     </div>
+    //   }
+    // >
       <ProductsByPet
         cantPages={totalPages}
         products={products}
@@ -89,6 +89,6 @@ export default async function PetPage({ params, searchParams }: Props) {
         title={selectedPet.title}
         description={selectedPet.description}
       />
-    </Suspense>
+    // </Suspense>
   );
 }
