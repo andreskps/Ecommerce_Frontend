@@ -17,6 +17,10 @@ interface DocsConfig {
 export const docsConfig: DocsConfig = {
    mainNav: [
       {
+         title: 'Inicio',
+         href: '/',
+      },
+      {
          title: 'Perros',
          href: '/pet/perro',
       },

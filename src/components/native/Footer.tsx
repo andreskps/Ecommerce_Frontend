@@ -10,12 +10,12 @@ const data = [
       label: 'LEGAL',
       links: [
          {
-            label: 'Privacy Policy',
-            url: '/privacy',
+            label: 'Politicas de privacidad',
+            url: '/politicas_privacidad',
          },
          {
             label: 'Terms & Conditions',
-            url: '/terms',
+            url: '/',
          },
       ],
    },
