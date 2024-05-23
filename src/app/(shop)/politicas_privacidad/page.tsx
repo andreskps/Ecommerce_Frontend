@@ -1,3 +1,14 @@
+import { config } from "@/config/site";
+import { Metadata } from "next";
+
+
+
+export const metadata: Metadata = {
+  title: 'Politica de privacidad',
+  description: `Descubre cómo ${config.name} protege tu información personal. Lee nuestra política de privacidad para entender qué datos recopilamos, cómo los usamos y tus derechos respecto a tu información.`
+}
+
+
 export default function PoliticasPrivadidadPage() {
   return (
     <main className="w-full max-w-4xl mx-auto px-4 md:px-6 py-12 md:py-20">

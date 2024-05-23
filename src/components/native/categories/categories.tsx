@@ -50,6 +50,9 @@ export const CategoryItem = ({ category }:CategoryItemProps ) => {
       // Si cambia la subcategoría, establece la página a 1
       if (name === 'subcategory') {
         params.set('page', '1')
+        params.delete('brand')
+        params.delete('category')
+
       }
   
       return params.toString()

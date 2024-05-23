@@ -51,6 +51,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     (category) => category.name.toLowerCase() === slug
   );
 
+
   if (!category) {
     notFound();
   }

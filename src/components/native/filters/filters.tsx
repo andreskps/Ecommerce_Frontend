@@ -16,7 +16,7 @@ import {
   Select,
 } from "@/components/ui/select";
 import { usePathname ,useRouter,useSearchParams} from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
 interface Props {
@@ -27,6 +27,15 @@ export const Filters = ({brands}:Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+
+
+  const [brand, setBrand] = useState("");
+
+  useEffect(() => {
+    setBrand(searchParams.get("brand") || "");
+  }
+  , [searchParams]);
+    
 
 
   const createQueryString = useCallback(
@@ -54,10 +63,8 @@ export const Filters = ({brands}:Props) => {
   };
 
   return (
-    <Accordion className="w-full" collapsible type="single">
-      <AccordionItem value="filter">
-        <AccordionTrigger className="text-base">Filtros</AccordionTrigger>
-        <AccordionContent>
+  
+      
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="sort">Ordenar por:</Label>
@@ -97,7 +104,7 @@ export const Filters = ({brands}:Props) => {
               <Label htmlFor="brand">Marca:</Label>
               <Select
                 onValueChange={handleBrand}
-                defaultValue="all">
+                defaultValue={brand}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
@@ -113,8 +120,6 @@ export const Filters = ({brands}:Props) => {
             </div>
 
           </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+
   );
 };

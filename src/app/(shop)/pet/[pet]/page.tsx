@@ -36,21 +36,21 @@ export async function generateMetadata(
 const pets = [
   {
     name: "perro",
-    description: "Dogs are the best pets",
+    description: "Descubre una amplia gama de productos para perros, desde alimentos saludables hasta juguetes y accesorios elegantes. ¡Todo lo que necesitas para mantener a tu perro feliz y saludable!",
     title: "Perros",
   },
   {
     name: "gato",
-    description: "Cats are the best pets",
+    description: "Explora nuestra selección de productos para gatos, incluyendo comida nutritiva, juguetes entretenidos y accesorios cómodos. ¡Todo lo necesario para el bienestar y la diversión de tu gato!",
     title: "Gatos",
   },
 ];
+
 
 export default async function PetPage({ params, searchParams }: Props) {
   const { pet } = params;
   const { subcategory = "", brand = "", page = 1,category= "" } = searchParams;
 
-  console.log(searchParams)
   const selectedPet = pets.find((p) => p.name === pet);
 
   if (!selectedPet) {
@@ -74,17 +74,7 @@ export default async function PetPage({ params, searchParams }: Props) {
   const products = data.products;
   const totalPages = Math.ceil(data.total / 10);
   return (
-    // <Suspense
-    //   fallback={
-    //     <div className="bg-primario ">
-    //       <svg
-    //         className="animate-spin h-5 w-5 mr-3 ..."
-    //         viewBox="0 0 24 24"
-    //       ></svg>
-    //       <span className="text-white">Cargando...</span>
-    //     </div>
-    //   }
-    // >
+    
       <ProductsByPet
         cantPages={totalPages}
         products={products}
@@ -92,6 +82,5 @@ export default async function PetPage({ params, searchParams }: Props) {
         title={selectedPet.title}
         description={selectedPet.description}
       />
-    // </Suspense>
   );
 }

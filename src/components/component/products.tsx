@@ -48,9 +48,9 @@ export async function ProductsByPet({
     <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
       {title}
     </h2>
-    <p className="max-w-[900px] text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400">
+    {/* <p className="max-w-[900px] text-gray-500 md:text-xl lg:text-base xl:text-xl dark:text-gray-400">
       {description}
-    </p>
+    </p> */}
     <p className="text-sm text-gray-500">{subcategory}</p>
   </div>
   <ProductsList products={products} />
