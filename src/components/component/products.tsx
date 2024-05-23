@@ -39,8 +39,8 @@ export async function ProductsByPet({
         <Filters brands={brands} />
       </div>
       <div className="md:hidden flex flex-col ">
-        <CategoriesMobile categories={categories} />
-        <FiltersMobile brands={brands}/>
+        {/* <CategoriesMobile categories={categories} /> */}
+        <FiltersMobile brands={brands} categories={categories}/>
       </div>
     
       <div className="flex flex-col items-center justify-center space-y-4 text-center">

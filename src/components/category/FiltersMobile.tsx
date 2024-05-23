@@ -31,7 +31,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from 'lucide-react';
 
 interface Props {
   categories: Category[];
@@ -50,16 +51,13 @@ export function FiltersMobile({ subcategories, categories }: Props) {
   const [subcategory, setSubcategory] = useState(
     searchParams.get("subcategory") || "all"
   );
+  const [selectedCategory, setSelectedCategory] = useState("Categorias");
   const [changes, setChanges] = useState({});
 
   useEffect(() => {
     setPet(searchParams.get("pet") || "all");
     setSubcategory(searchParams.get("subcategory") || "all");
   }, [searchParams]);
-
-
-
-
 
   const handleFilter = (value: string) => {
     setChanges((prev) => ({ ...prev, filter: value }));
@@ -84,29 +82,34 @@ export function FiltersMobile({ subcategories, categories }: Props) {
       params.set(key, value as string);
     }
 
-    params.set('page', '1');
+    params.set("page", "1");
     router.push(pathname + "?" + params.toString());
   };
 
   return (
-    <div className="md:hidden flex gap-5 relative z-30">
-
-      <Select
-
-
-       onValueChange={handleCategoryChange}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Seleccionar categoría" />
-        </SelectTrigger>
-        <SelectContent className="">
-          {categories.map((category, i) => (
-            <SelectItem key={category.id} value={category.name}>
-              {category.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="md:hidden flex gap-5 ">
      
+      <div className="relative w-full">
+  <DropdownMenu>
+  <DropdownMenuTrigger className="flex justify-between items-center w-64 text-left p-2 border border-gray-300 rounded-md bg-white text-gray-700">
+  Categorias
+    <ChevronDown className="h-5 w-5" />
+</DropdownMenuTrigger>
+    <DropdownMenuContent className="mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+      {categories.map((category, i) => (
+        <DropdownMenuItem
+          key={category.id}
+          onClick={() => handleCategoryChange(category.name)}
+          className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        >
+          {category.name}
+        </DropdownMenuItem>
+    
+      ))}
+    </DropdownMenuContent>
+  </DropdownMenu>
+</div>
+
       <Sheet>
         <SheetTrigger asChild>
           <Button className="md:hidden bg-black">
@@ -174,9 +177,9 @@ export function FiltersMobile({ subcategories, categories }: Props) {
           </div>
           <SheetFooter>
             <SheetClose asChild>
-                <Button onClick={applyFilters} type="submit">
-                    Aplicar filtros
-                </Button>
+              <Button onClick={applyFilters} type="submit">
+                Aplicar filtros
+              </Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

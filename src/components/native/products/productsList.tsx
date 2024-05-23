@@ -11,7 +11,7 @@ interface Props {
 
 const ProductsList = ({ products }: Props) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 ">
       {products.map((product, i) => (
         <>
           <div className="relative group flex flex-col items-stretch" key={i}>

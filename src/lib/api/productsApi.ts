@@ -23,13 +23,14 @@ export const getProductsByCategory = async (params: ParamsByCategory) => {
 type ParamsByPet = {
   pet: string;
   subcategory?: string;
+  category?: string;
   brand?: string;
   page?: number;
 };
 
 export const getProductsByPet = async (params: ParamsByPet) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products/byPet/${params.pet}?subcategory=${params.subcategory}&brand=${params.brand}&page=${params.page}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products/byPet/${params.pet}?subcategory=${params.subcategory}&brand=${params.brand}&page=${params.page}&category=${params.category}`,
     {
       next:{
         // revalidate: 4200,

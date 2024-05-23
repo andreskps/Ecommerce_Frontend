@@ -23,26 +23,55 @@ import {
 import { Brand } from "@/app/interface/brands/Brands.interface";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-interface Props {
-  brands: Brand[];
+
+interface Subcategory {
+  id: number;
+  name: string;
 }
 
-export const FiltersMobile = ({ brands }: Props) => {
+interface Category {
+  id: number;
+  name: string;
+  subcategories: Subcategory[];
+}
+interface Props {
+  brands: Brand[];
+  categories: Category[];
+}
+
+export const FiltersMobile = ({ brands,categories }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [brand, setBrand] = useState(searchParams.get("brand") || "all");
 
+  const [categorySelected, setCategorySelected] = useState("")
+
+  const [subcategorySelected, setSubcategorySelected] = useState("")
+
+
   const [changes, setChanges] = useState({});
 
   useEffect(() => {
     setBrand(searchParams.get("brand") || "all");
+    setCategorySelected(searchParams.get("category") || "all");
+    setSubcategorySelected(searchParams.get("subcategory") || "all");
+
   }, [searchParams]);
 
   const handleBrand = (value: string) => {
     setChanges((prev) => ({ ...prev, brand: value }));
   };
+
+  const handleCategory = (value: string) => {
+    setChanges((prev) => ({ ...prev, category: value }));
+  };
+
+  const handleSubcategory = (value: string) => {
+    setChanges((prev) => ({ ...prev, subcategory: value }));
+  };
+
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams.toString());
     for (const [key, value] of Object.entries(changes)) {
@@ -68,7 +97,60 @@ export const FiltersMobile = ({ brands }: Props) => {
         </SheetHeader>
         <div className="grid gap-4 py-4">
           {/* Aquí es donde se mueven los filtros */}
-          <div className="grid gap-2"></div>
+          <div className="grid gap-2">
+            <Label className="text-sm">Categoría</Label>
+            <Select defaultValue={categorySelected}
+              onValueChange={(value) => {
+
+                setCategorySelected(value);
+                handleCategory(value);
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Seleccionar" 
+          
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas</SelectItem>
+                {categories.map((category, i) => (
+                  <SelectItem key={category.id} value={category.name}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="subcategory">Subcategoría</Label>
+            <Select defaultValue={subcategorySelected}
+              onValueChange={(value) => {
+                setSubcategorySelected(value);
+                handleSubcategory(value);
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Seleccionar" />
+              </SelectTrigger>
+              <SelectContent>
+               
+                 <SelectItem value="all">Todas</SelectItem>
+                {categories
+                  .filter((category) => category.name === categorySelected)
+                  .map((category) =>
+                    category.subcategories.map((subcategory) => (
+                      <SelectItem key={subcategory.id} value={subcategory.name}>
+                        {subcategory.name}
+                      </SelectItem>
+                    ))
+                  )}
+
+              </SelectContent>
+            </Select>
+          </div>
+
+
 
           <div className="grid gap-2">
             <Label htmlFor="filter">Filtrar por:</Label>

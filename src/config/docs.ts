@@ -25,6 +25,10 @@ export const docsConfig: DocsConfig = {
          title: 'Gatos',
          href: '/pet/gato',
       },
+      {
+         title: 'Estado de orden',
+         href: '/order-status',
+      }
    ],
    sidebarNav: [
       {

@@ -48,8 +48,9 @@ const pets = [
 
 export default async function PetPage({ params, searchParams }: Props) {
   const { pet } = params;
-  const { subcategory = "", brand = "", page = 1 } = searchParams;
+  const { subcategory = "", brand = "", page = 1,category= "" } = searchParams;
 
+  console.log(searchParams)
   const selectedPet = pets.find((p) => p.name === pet);
 
   if (!selectedPet) {
@@ -60,8 +61,10 @@ export default async function PetPage({ params, searchParams }: Props) {
     pet: pet,
     subcategory: subcategory as string,
     brand: brand as string,
+    category: category as string,
     page: parseInt(page as string),
   });
+
 
   if (!response.ok) {
     return notFound();

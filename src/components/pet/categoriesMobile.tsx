@@ -51,45 +51,53 @@ export const CategoriesMobile = ({ categories }: Props) => {
 
   return (
     <>
-     <Label>Categoría</Label>
-      <Select
-        onValueChange={(value) => {
-          setCategorySelected(value);
-        }}
-      >
-        <SelectTrigger className="w-full m-3">
-          <SelectValue placeholder="Seleccionar categoría" />
-        </SelectTrigger>
-        <SelectContent>
-          {categories.map((category, i) => (
-            <SelectItem key={category.id} value={category.name}>
-              {category.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+     <div className="flex items-center">
+  <div className="mr-3">
+    <Label>Categoría</Label>
+    <Select
+      onValueChange={(value) => {
+        setCategorySelected(value);
+      }}
+    >
+      <SelectTrigger className="w-full m-3">
+        <SelectValue placeholder="Seleccionar categoría" />
+      </SelectTrigger>
+      <SelectContent>
+        {categories.map((category, i) => (
+          <SelectItem key={category.id} value={category.name}>
+            {category.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  </div>
 
-      <Label>Subcategoría</Label>
-      <Select
-        onValueChange={(value) => {
-          handleSubcategory(value);
-        }}
-      >
-        <SelectTrigger className="w-full m-3">
-          <SelectValue placeholder="Seleccionar subcategoria" />
-        </SelectTrigger>
-        <SelectContent>
-          {categories
-            .filter((category) => category.name === categorySelected)
-            .map((category) =>
-              category.subcategories.map((subcategory) => (
-                <SelectItem key={subcategory.id} value={subcategory.name}>
-                  {subcategory.name}
-                </SelectItem>
-              ))
-            )}
-        </SelectContent>
-      </Select>
+  <div className="mr-3">
+    <Label>Subcategoría</Label>
+    <Select
+      onValueChange={(value) => {
+        handleSubcategory(value);
+      }}
+    >
+      <SelectTrigger className="w-full m-3">
+        <SelectValue placeholder="Seleccionar subcategoria" />
+      </SelectTrigger>
+      <SelectContent>
+        {categories
+          .filter((category) => category.name === categorySelected)
+          .map((category) =>
+            category.subcategories.map((subcategory) => (
+              <SelectItem key={subcategory.id} value={subcategory.name}>
+                {subcategory.name}
+              </SelectItem>
+            ))
+          )}
+      </SelectContent>
+    </Select>
+  </div>
+
+  <button className="p-2 bg-blue-500 text-white rounded">Buscar</button>
+</div>
     </>
   );
 };
