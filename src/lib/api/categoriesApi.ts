@@ -5,7 +5,7 @@ export const getCategories = async () => {
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/categories`,{
             next:{
-                revalidate: 60*60*24*7
+                revalidate:0
             }
         }
     );
