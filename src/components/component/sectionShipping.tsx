@@ -293,7 +293,7 @@ export default function SectionShipping() {
                 Pago Contra Entrega
               </Button>
 
-              <div className="w-full flex justify-center">
+              {/* <div className="w-full flex justify-center">
                 <Button
                   onClick={form.handleSubmit(handlePayMercadoPago)}
                   className={`flex items-center justify-center ${
@@ -310,7 +310,7 @@ export default function SectionShipping() {
                   />
                   Pagar con Mercado Pago
                 </Button>
-              </div>
+              </div> */}
               <div className="w-full flex justify-center space-x-2">
                 <Input
                   type="text"
