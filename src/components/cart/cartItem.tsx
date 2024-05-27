@@ -3,6 +3,7 @@ import React from "react";
 import { useCartStore } from "@/store/cart-store";
 import { Trash2, CirclePlus, CircleMinus } from "lucide-react";
 import Image from "next/image";
+import { currencyFormat } from '../../lib/currencyFormat';
 
 interface Props {
   productId: string;
@@ -70,7 +71,8 @@ export const CartItem = ({
             </button>
           </div>
           <div className="flex items-center space-x-4">
-            <p className="text-sm">${price*quantity}</p>
+            <p className="text-sm">{currencyFormat(price*quantity)}</p>
+        
             <button
               onClick={() => removeFromCart(productId, variantId)}
               aria-label="Eliminar del carrito"

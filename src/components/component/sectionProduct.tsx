@@ -141,7 +141,7 @@ export default function SectionProduct({ product }: Props) {
                 key={variant.id}
                 type="button"
                 onClick={() => handleSelectVariant(variant)}
-                className={`w-12 h-12 rounded-md shadow-sm ${
+                className={`w-auto h-12 rounded-md shadow-sm ${
                   variant.id === variantSelected.id
                     ? "bg-primario hover:bg-primario text-white"
                     : "bg-gray-100 text-zinc-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
@@ -185,9 +185,9 @@ export default function SectionProduct({ product }: Props) {
             Añadir al carrito
           </Button>
 
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+          {/* <p className="text-xs text-zinc-500 dark:text-zinc-400">
             Free shipping on orders over $50
-          </p>
+          </p> */}
           {/* <p className="text-xs text-zinc-500 dark:text-zinc-400">
             Fabric: 100% Cotton. Care: Machine wash cold, tumble dry low.
           </p> */}

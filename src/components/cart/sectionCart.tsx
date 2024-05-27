@@ -4,10 +4,25 @@ import { CartItem } from "./cartItem";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
+import { useEffect,useState } from "react";
 export const SectionCart = () => {
   const cart = useCartStore((state) => state.cart);
   const getInformations = useCartStore((state) => state.getInformations);
   const router = useRouter();
+const [isClient, setIsClient] = useState(false);
+
+useEffect(() => {
+  setIsClient(true);
+}, []);
+
+if (!isClient) {
+  return (
+    <div className="flex items-center justify-center h-96">
+      <p className="text-2xl font-bold text-gray-500">Cargando...</p>
+    </div>
+  );
+}
+  
 
   if (cart.length === 0) {
     return (

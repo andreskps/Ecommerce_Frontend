@@ -223,11 +223,11 @@ export default function SectionShipping() {
                     <div className="space-y-1">
                       <h3 className="font-semibold">{item.title}</h3>
                       <p className="text-gray-500 dark:text-gray-400">
-                        Talla: {item.variant.attribute}
+                        Referencia: {item.variant.value}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">{item.variant.unitPrice}</p>
+                      <p className="font-semibold">{currencyFormat(item.variant.unitPrice)}</p>
                       <p className="text-gray-500 dark:text-gray-400">
                         x{item.quantity}
                       </p>

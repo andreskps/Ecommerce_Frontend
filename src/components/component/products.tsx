@@ -33,7 +33,7 @@ export async function ProductsByPet({
 
 
   return (
-    <div className="container mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 px-4 md:px-6 py-12 md:py-24">
+    <div className="container mx-auto grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 px-4 md:px-6 py-12 md:py-10">
       <div className="md:flex md:flex-col gap-6 hidden">
         <Categories categories={categories} />
         <Filters brands={brands} />

@@ -10,6 +10,11 @@ interface Props {
 }
 
 const ProductsList = ({ products }: Props) => {
+
+  if(products.length === 0) {
+    return <p className="text-center">No se encontraron productos</p>
+  }
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 ">
       {products.map((product, i) => (
