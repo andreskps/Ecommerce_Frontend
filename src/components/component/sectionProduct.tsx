@@ -7,6 +7,8 @@ import { CartItem, useCartStore } from "@/store/cart-store";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { Star } from "lucide-react";
 import { useToast } from "../ui/use-toast";
+import { AddToCartTrigger } from "@/services/eventsMeta/addToCart";
+import ReactPixel from 'react-facebook-pixel';
 
 interface Image {
   id: number;
@@ -83,6 +85,14 @@ export default function SectionProduct({ product }: Props) {
       image: product.images[0].url,
     };
 
+    AddToCartTrigger({
+      content_name: product.title,
+      content_ids: [product.id],
+      value: totalPrice,
+      currency: "COP",
+    });
+
+  
     addToCart(productCart);
 
     setQuantity(1);

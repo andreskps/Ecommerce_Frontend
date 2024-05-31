@@ -4,25 +4,36 @@ import { CartItem } from "./cartItem";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
+import ReactPixel from "react-facebook-pixel";
 export const SectionCart = () => {
   const cart = useCartStore((state) => state.cart);
   const getInformations = useCartStore((state) => state.getInformations);
   const router = useRouter();
-const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-useEffect(() => {
-  setIsClient(true);
-}, []);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-if (!isClient) {
-  return (
-    <div className="flex items-center justify-center h-96">
-      <p className="text-2xl font-bold text-gray-500">Cargando...</p>
-    </div>
-  );
-}
-  
+  if (!isClient) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <p className="text-2xl font-bold text-gray-500">Cargando...</p>
+      </div>
+    );
+  }
+
+  const handleCheckout = () => {
+    ReactPixel.track("InitiateCheckout", {
+      value: getInformations().subtotal,
+      currency: "COP",
+      content_ids: cart.map((item) => item.variant.id),
+      content_type: "product",
+      num_items: cart.length,
+    });
+    router.push("/checkout");
+  };
 
   if (cart.length === 0) {
     return (
@@ -74,9 +85,10 @@ if (!isClient) {
             </p>
           </div>
         </div>
-        <button 
-          onClick={() => router.push("/checkout")}
-        className="mt-4 w-full py-2 px-4 rounded bg-primario text-white text-center">
+        <button
+          onClick={handleCheckout}
+          className="mt-4 w-full py-2 px-4 rounded bg-primario text-white text-center"
+        >
           Proceder al pago
         </button>
       </div>
