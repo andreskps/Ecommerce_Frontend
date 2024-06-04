@@ -5,7 +5,7 @@ import { currencyFormat } from "@/lib/currencyFormat";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
-import ReactPixel from "react-facebook-pixel";
+
 export const SectionCart = () => {
   const cart = useCartStore((state) => state.cart);
   const getInformations = useCartStore((state) => state.getInformations);
@@ -24,16 +24,16 @@ export const SectionCart = () => {
     );
   }
 
-  const handleCheckout = () => {
-    ReactPixel.track("InitiateCheckout", {
-      value: getInformations().subtotal,
-      currency: "COP",
-      content_ids: cart.map((item) => item.variant.id),
-      content_type: "product",
-      num_items: cart.length,
-    });
-    router.push("/checkout");
-  };
+  // const handleCheckout = () => {
+  //   ReactPixel.track("InitiateCheckout", {
+  //     value: getInformations().subtotal,
+  //     currency: "COP",
+  //     content_ids: cart.map((item) => item.variant.id),
+  //     content_type: "product",
+  //     num_items: cart.length,
+  //   });
+  //   router.push("/checkout");
+  // };
 
   if (cart.length === 0) {
     return (
@@ -86,7 +86,7 @@ export const SectionCart = () => {
           </div>
         </div>
         <button
-          onClick={handleCheckout}
+          // onClick={handleCheckout}
           className="mt-4 w-full py-2 px-4 rounded bg-primario text-white text-center"
         >
           Proceder al pago

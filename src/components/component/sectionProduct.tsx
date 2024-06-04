@@ -7,9 +7,8 @@ import { CartItem, useCartStore } from "@/store/cart-store";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { Star } from "lucide-react";
 import { useToast } from "../ui/use-toast";
-import { AddToCartTrigger } from "@/services/eventsMeta/addToCart";
-import ReactPixel from 'react-facebook-pixel';
-
+import { AddToCartTrigger, viewContent } from "@/services/eventsMeta/addToCart";
+import { generateEventId } from "@/lib/generateEventId";
 interface Image {
   id: number;
   url: string;
@@ -49,7 +48,6 @@ interface Props {
 }
 
 export default function SectionProduct({ product }: Props) {
-
   const [quantity, setQuantity] = useState(1);
   const discountPrice =
     product.discount?.percentage === null
@@ -61,6 +59,15 @@ export default function SectionProduct({ product }: Props) {
   const [variantSelected, setVariantSelected] = useState<Variant>(
     product.variants[0]
   );
+
+  useEffect(() => {
+      viewContent({
+        content_name: product.title,
+        content_ids: [product.id],
+        value: variantSelected.price,
+        currency: "COP",
+      });
+  }, [product]);
 
   const handleSelectVariant = (variant: Variant) => {
     setVariantSelected(variant);
@@ -92,7 +99,6 @@ export default function SectionProduct({ product }: Props) {
       currency: "COP",
     });
 
-  
     addToCart(productCart);
 
     setQuantity(1);
@@ -117,14 +123,14 @@ export default function SectionProduct({ product }: Props) {
 
           <div className="flex">
             {[...Array(5)].map((_, i) => (
-                 <svg
-                 key={i}
-                 className="w-4 h-4 fill-current text-yellow-500"
-                 xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 24 24"
-               >
-                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.15l-5-4.88 6.91-1.01L12 2z" />
-               </svg>
+              <svg
+                key={i}
+                className="w-4 h-4 fill-current text-yellow-500"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.15l-5-4.88 6.91-1.01L12 2z" />
+              </svg>
             ))}
           </div>
 
