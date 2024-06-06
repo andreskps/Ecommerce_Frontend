@@ -113,8 +113,7 @@ export const Filters = ({ categories, subcategories }: Props) => {
               <SelectContent>
                 <SelectItem value="all">Todos</SelectItem>
                 <SelectItem value="new">Nuevos</SelectItem>
-                <SelectItem value="sale">En Oferta</SelectItem>
-                <SelectItem value="featured">Destacados</SelectItem>
+                <SelectItem value="popular">Populares</SelectItem>
               </SelectContent>
             </Select>
           </div>

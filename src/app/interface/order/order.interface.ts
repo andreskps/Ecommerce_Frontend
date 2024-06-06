@@ -6,6 +6,14 @@ export interface CreateOrder {
   namePet: string;
   paymentMethod:string,
   coupon?:string;
+
+  user_data?:{
+    fbp?:string;
+    fbc?:string;
+  }
+
+
+
   variants: {
     id: number;
     quantity: number;

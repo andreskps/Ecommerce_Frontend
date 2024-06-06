@@ -43,7 +43,7 @@ export async function generateMetadata(
 export default async function CategoryPage({ params, searchParams }: Props) {
   const { slug } = params;
 
-  const { subcategory = "", pet = "", page = 1 } = searchParams;
+  const { subcategory = "", pet = "", page = 1 ,filter=""} = searchParams;
 
   const categories = await getCategories();
 
@@ -60,6 +60,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     category: category.name,
     subcategory: subcategory as string,
     pet: pet as string,
+    filter: filter as string,
     page: parseInt(page as string),
   });
 

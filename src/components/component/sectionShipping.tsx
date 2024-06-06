@@ -21,6 +21,7 @@ import { Input } from "../ui/input";
 import { applyCodeDiscount } from "@/lib/api/codeDiscountApi";
 import { DialogDemo } from "../checkout/ModalConfirmPay";
 import Image from "next/image";
+import Cookies from 'js-cookie';
 
 
 export default function SectionShipping() {
@@ -119,6 +120,9 @@ export default function SectionShipping() {
         addressDetail: form.getValues("instructions"),
         municipioId: parseInt(form.getValues("province")),
       },
+      user_data: {
+        fbp: Cookies.get('_fbp') || '',
+      }
     };
 
     const response = await createOrder(newOrder);

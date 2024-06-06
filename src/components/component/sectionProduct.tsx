@@ -7,7 +7,7 @@ import { CartItem, useCartStore } from "@/store/cart-store";
 import { currencyFormat } from "@/lib/currencyFormat";
 import { Star } from "lucide-react";
 import { useToast } from "../ui/use-toast";
-import { AddToCartTrigger, viewContent } from "@/services/eventsMeta/addToCart";
+import { AddToCartTrigger, viewContent } from "@/services/eventsMeta/eventsMeta";
 import { generateEventId } from "@/lib/generateEventId";
 interface Image {
   id: number;
@@ -114,7 +114,7 @@ export default function SectionProduct({ product }: Props) {
   return (
     <section className="w-full py-6 md:py-12 lg:py-24">
       <BackButton />
-      <div className="container flex flex-col md:flex-row items-start gap-8 px-4 md:px-6">
+      <div className="container w-full flex flex-col md:flex-row items-start gap-8 px-4 md:px-6">
         <CarouselDemo images={product.images} />
         <div className="space-y-6">
           <h1 className="text-2xl md:text-4xl font-bold tracking-tighter">

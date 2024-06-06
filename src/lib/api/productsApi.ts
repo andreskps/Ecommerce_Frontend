@@ -4,12 +4,13 @@ type ParamsByCategory = {
   category: string;
   subcategory: string;
   pet: string;
+  filter?: string;
   page?: number;
 };
 
 export const getProductsByCategory = async (params: ParamsByCategory) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products/byCategory/${params.category}?subcategory=${params.subcategory}&pet=${params.pet}&page=${params.page}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products/byCategory/${params.category}?subcategory=${params.subcategory}&pet=${params.pet}&page=${params.page}&filter=${params.filter}`,
     {
       method: "GET",
       cache: "no-cache",

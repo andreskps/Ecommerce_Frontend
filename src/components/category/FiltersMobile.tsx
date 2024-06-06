@@ -52,10 +52,17 @@ export function FiltersMobile({ subcategories, categories }: Props) {
     searchParams.get("subcategory") || "all"
   );
   const [selectedCategory, setSelectedCategory] = useState("Categorias");
+
+
+  const [selectedFilter, setSelectedFilter] = useState(searchParams.get("filter") || "all");
+
+
+
   const [changes, setChanges] = useState({});
 
   useEffect(() => {
     setPet(searchParams.get("pet") || "all");
+    setSelectedFilter(searchParams.get("filter") || "all");
     setSubcategory(searchParams.get("subcategory") || "all");
   }, [searchParams]);
 
@@ -162,15 +169,14 @@ export function FiltersMobile({ subcategories, categories }: Props) {
 
             <div className="grid gap-2">
               <Label htmlFor="filter">Filtrar por:</Label>
-              <Select onValueChange={handleFilter} defaultValue="all">
+              <Select onValueChange={handleFilter} defaultValue={selectedFilter}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Todos</SelectItem>
                   <SelectItem value="new">Nuevos</SelectItem>
-                  <SelectItem value="sale">En Oferta</SelectItem>
-                  <SelectItem value="featured">Destacados</SelectItem>
+                  <SelectItem value="popular">Populares</SelectItem>
                 </SelectContent>
               </Select>
             </div>
