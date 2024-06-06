@@ -30,9 +30,11 @@ export const Filters = ({brands}:Props) => {
 
 
   const [brand, setBrand] = useState("");
+  const [filter, setFilter] = useState(searchParams.get("filter") || "all");
 
   useEffect(() => {
     setBrand(searchParams.get("brand") || "");
+    setFilter(searchParams.get("filter") || "");
   }
   , [searchParams]);
     
@@ -66,7 +68,7 @@ export const Filters = ({brands}:Props) => {
   
       
           <div className="grid gap-4">
-            <div className="grid gap-2">
+            {/* <div className="grid gap-2">
               <Label htmlFor="sort">Ordenar por:</Label>
               <Select defaultValue="featured" onValueChange={handleSort}>
                 <SelectTrigger className="w-full">
@@ -83,24 +85,23 @@ export const Filters = ({brands}:Props) => {
                   <SelectItem value="rating">Calificación</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
             <div className="grid gap-2">
               <Label htmlFor="filter">Filtrar por:</Label>
               <Select
                 onValueChange={handleFilter}
-               defaultValue="all">
+               defaultValue={filter}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Seleccionar" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Todos</SelectItem>
                   <SelectItem value="new">Nuevos</SelectItem>
-                  <SelectItem value="sale">En Oferta</SelectItem>
-                  <SelectItem value="featured">Destacados</SelectItem>
+                  <SelectItem value="popular">Populares</SelectItem>
                 </SelectContent>
               </Select>        
             </div>
-            <div className="grid gap-2">
+            {/* <div className="grid gap-2">
               <Label htmlFor="brand">Marca:</Label>
               <Select
                 onValueChange={handleBrand}
@@ -117,7 +118,7 @@ export const Filters = ({brands}:Props) => {
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
           </div>
 

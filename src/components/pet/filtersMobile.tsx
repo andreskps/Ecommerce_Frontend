@@ -50,6 +50,8 @@ export const FiltersMobile = ({ brands,categories }: Props) => {
 
   const [subcategorySelected, setSubcategorySelected] = useState("")
 
+  const [filter, setFilter] = useState(searchParams.get("filter") || "all");
+
 
   const [changes, setChanges] = useState({});
 
@@ -57,6 +59,7 @@ export const FiltersMobile = ({ brands,categories }: Props) => {
     setBrand(searchParams.get("brand") || "all");
     setCategorySelected(searchParams.get("category") || "all");
     setSubcategorySelected(searchParams.get("subcategory") || "all");
+    setFilter(searchParams.get("filter") || "all");
 
   }, [searchParams]);
 
@@ -68,6 +71,9 @@ export const FiltersMobile = ({ brands,categories }: Props) => {
     setChanges((prev) => ({ ...prev, category: value }));
   };
 
+  const handleFilter = (value: string) => {
+    setChanges((prev) => ({ ...prev, filter: value }));
+  }
   const handleSubcategory = (value: string) => {
     setChanges((prev) => ({ ...prev, subcategory: value }));
   };
@@ -154,19 +160,20 @@ export const FiltersMobile = ({ brands,categories }: Props) => {
 
           <div className="grid gap-2">
             <Label htmlFor="filter">Filtrar por:</Label>
-            <Select defaultValue="all">
+            <Select defaultValue={filter}
+              onValueChange={handleFilter}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Seleccionar" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todos</SelectItem>
                 <SelectItem value="new">Nuevos</SelectItem>
-                <SelectItem value="sale">En Oferta</SelectItem>
-                <SelectItem value="featured">Destacados</SelectItem>
+                <SelectItem value="popular">Populares</SelectItem>
               </SelectContent>
             </Select>
           </div>
-          <div className="grid gap-2">
+          {/* <div className="grid gap-2">
             <Label htmlFor="brand">Marca:</Label>
             <Select defaultValue={brand} onValueChange={handleBrand}>
               <SelectTrigger className="w-full">
@@ -181,7 +188,7 @@ export const FiltersMobile = ({ brands,categories }: Props) => {
                 ))}
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
         </div>
         <SheetFooter>
           <SheetClose asChild>

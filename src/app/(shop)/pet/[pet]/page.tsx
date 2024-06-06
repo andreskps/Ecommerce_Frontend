@@ -49,7 +49,7 @@ const pets = [
 
 export default async function PetPage({ params, searchParams }: Props) {
   const { pet } = params;
-  const { subcategory = "", brand = "", page = 1,category= "" } = searchParams;
+  const { subcategory = "", brand = "", page = 1,category= "" ,filter=""} = searchParams;
 
   const selectedPet = pets.find((p) => p.name === pet);
 
@@ -63,6 +63,7 @@ export default async function PetPage({ params, searchParams }: Props) {
     brand: brand as string,
     category: category as string,
     page: parseInt(page as string),
+    filter: filter as string,
   });
 
 
