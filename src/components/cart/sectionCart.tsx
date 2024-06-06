@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
 import { InitiateCheckoutTrigger } from "@/services/eventsMeta/eventsMeta";
 import Cookies from "js-cookie";
+import { Button } from "../ui/button";
 
 export const SectionCart = () => {
   const cart = useCartStore((state) => state.cart);
@@ -42,11 +43,21 @@ export const SectionCart = () => {
 
   if (cart.length === 0) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <p className="text-2xl font-bold text-gray-500">
-          Tu carrito está vacío
-        </p>
-      </div>
+      <>
+        <div className="flex flex-col items-center justify-center h-96">
+          <p className="text-2xl font-bold text-gray-500">
+            Tu carrito está vacío
+          </p>
+          <div className="mt-6">
+            <Button
+              onClick={() => router.push("/")}
+              className="bg-primario text-white"
+            >
+              Ir a la tienda
+            </Button>
+          </div>
+        </div>
+      </>
     );
   }
 
