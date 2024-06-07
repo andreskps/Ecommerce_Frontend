@@ -9,6 +9,7 @@ import { Star } from "lucide-react";
 import { useToast } from "../ui/use-toast";
 import { AddToCartTrigger, viewContent } from "@/services/eventsMeta/eventsMeta";
 import { generateEventId } from "@/lib/generateEventId";
+import Cookies from 'js-cookie';
 interface Image {
   id: number;
   url: string;
@@ -66,6 +67,8 @@ export default function SectionProduct({ product }: Props) {
         content_ids: [product.id],
         value: variantSelected.price,
         currency: "COP",
+        fbc: Cookies.get('_fbc'),
+        fbp: Cookies.get('_fbp'),
       });
   }, [product]);
 
@@ -97,6 +100,8 @@ export default function SectionProduct({ product }: Props) {
       content_ids: [product.id],
       value: totalPrice,
       currency: "COP",
+      fbc: Cookies.get('_fbc'),
+      fbp: Cookies.get('_fbp'),
     });
 
     addToCart(productCart);

@@ -6,22 +6,23 @@ interface ProductProps {
   value: number;
   currency: string;
   fbp?: string;
+  fbc?: string;
 }
 
 async function trackEvent(eventType: string, product: ProductProps, apiEndpoint: string) {
   const eventID = uuidv4();
   const eventTime = Math.floor(Date.now() / 1000);
 
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq("track", eventType, {
-      content_name: product.content_name,
-      content_ids: product.content_ids,
-      value: product.value,
-      currency: product.currency,
-    },{
-      eventID: eventID.toString(),
-    });
-  }
+  // if (typeof window !== 'undefined' && (window as any).fbq) {
+  //   (window as any).fbq("track", eventType, {
+  //     content_name: product.content_name,
+  //     content_ids: product.content_ids,
+  //     value: product.value,
+  //     currency: product.currency,
+  //   },{
+  //     eventID: eventID.toString(),
+  //   });
+  // }
 
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${apiEndpoint}`, {
@@ -33,7 +34,10 @@ async function trackEvent(eventType: string, product: ProductProps, apiEndpoint:
       body: JSON.stringify({
         event_id: eventID,
         event_time: eventTime,
-        user_data: product.fbp ? { fbp: product.fbp } : undefined,
+        user_data:{
+          fbp: product.fbp  || "",
+          fbc: product.fbc || "",
+        },
         custom_data: {
           content_name: product.content_name,
           content_ids: product.content_ids,

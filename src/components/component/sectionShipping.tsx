@@ -122,6 +122,7 @@ export default function SectionShipping() {
       },
       user_data: {
         fbp: Cookies.get('_fbp') || '',
+        fbc: Cookies.get('_fbc') || '',
       }
     };
 
