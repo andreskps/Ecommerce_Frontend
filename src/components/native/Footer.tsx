@@ -13,42 +13,42 @@ const data = [
             label: 'Politicas de privacidad',
             url: '/politicas_privacidad',
          },
-         {
-            label: 'Terms & Conditions',
-            url: '/',
-         },
+         // {
+         //    label: 'Terms & Conditions',
+         //    url: '/',
+         // },
       ],
    },
-   {
-      label: 'RESOURCES',
-      links: [
-         {
-            label: 'Blog',
-            url: '/blog',
-         },
-         {
-            label: 'About',
-            url: '/about',
-         },
-         {
-            label: 'Contact',
-            url: '/contact',
-         },
-      ],
-   },
-   {
-      label: 'SUPPORT',
-      links: [
-         {
-            label: 'Telegram',
-            url: '/telegram',
-         },
-         {
-            label: 'FAQ',
-            url: '/faq',
-         },
-      ],
-   },
+   // {
+   //    label: 'RESOURCES',
+   //    links: [
+   //       {
+   //          label: 'Blog',
+   //          url: '/blog',
+   //       },
+   //       {
+   //          label: 'About',
+   //          url: '/about',
+   //       },
+   //       {
+   //          label: 'Contact',
+   //          url: '/contact',
+   //       },
+   //    ],
+   // },
+   // {
+   //    label: 'SUPPORT',
+   //    links: [
+   //       {
+   //          label: 'Telegram',
+   //          url: '/telegram',
+   //       },
+   //       {
+   //          label: 'FAQ',
+   //          url: '/faq',
+   //       },
+   //    ],
+   // },
 ]
 
 export default function Footer() {
@@ -109,14 +109,14 @@ function Socials() {
    return (
       <div className="mb-6 flex justify-center space-x-6 text-muted-foreground">
          <a
-            href="https://instagram.com/accretence"
+            href="https://www.instagram.com/petlify.online/"
             target="_blank"
             rel="noreferrer"
          >
             <InstagramIcon className="h-4" />
             <span className="sr-only">Instagram page</span>
          </a>
-         <a
+         {/* <a
             href="https://twitter.com/accretence"
             target="_blank"
             rel="noreferrer"
@@ -131,7 +131,7 @@ function Socials() {
          >
             <GithubIcon className="h-4" />
             <span className="sr-only">GitHub account</span>
-         </a>
+         </a> */}
       </div>
    )
 }

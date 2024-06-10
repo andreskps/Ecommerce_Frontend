@@ -39,10 +39,10 @@ export const docsConfig: DocsConfig = {
          title: 'Products',
          href: '/products',
       },
-      {
-         title: 'Blog',
-         href: '/blog',
-      },
+      // {
+      //    title: 'Blog',
+      //    href: '/blog',
+      // },
       {
          title: 'Orders',
          href: '/profile/orders',
