@@ -31,8 +31,8 @@ export default async function Home() {
     <div className="flex flex-col border-neutral-200 ">
       <Carousel banners={banners} />
       <div className="flex flex-col items-center justify-center py-8">
-        <h1 className="text-2xl font-bold">Bienvenido a {config.name}</h1>
-        <p className="text-sm text-neutral-500">
+        <h1 className="text-3xl font-bold">Bienvenido a {config.name}</h1>
+        <p className=" text-neutral-500 text-center py-2">
            Encuentra los mejores productos para tu mascota
         </p>
       </div>

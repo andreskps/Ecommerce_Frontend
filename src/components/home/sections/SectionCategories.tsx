@@ -7,34 +7,34 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export  function SectionCategories() {
+export function SectionCategories() {
   const categories = [
-    {
-      title: "Alimento",
-      description: "Encuentra el alimento ideal para tu mascota.",
-      image:
-        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713447093/banners/hqisyktgd8uuhvtppwwg.png",
-      link:"/category/alimentos"
-    },
+    // {
+    //   title: "Alimento",
+    //   description: "Encuentra el alimento ideal para tu mascota.",
+    //   image:
+    //     "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713447093/banners/hqisyktgd8uuhvtppwwg.png",
+    //   link:"/category/alimentos"
+    // },
     {
       title: "Juguetes",
       description: "Descubre la diversión para tu mascota.",
       image:
-        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713447093/banners/axnotn1etfrvhku9y6zb.png",
+        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1718374277/banners/juguete-para-mascotas_jtdv0w.png",
       link: "/category/juguetes",
     },
     {
       title: "Accesorios",
       description: "Encuentra los mejores accesorios para tu mascota.",
       image:
-        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713448667/banners/fp7i11l3lmt0jskondge.png",
+        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1718374329/banners/collar-para-mascotas_wf2bwm.png",
       link: "/category/accesorios",
     },
     {
       title: "Higiene",
       description: "Productos para la higiene de tu mascota.",
       image:
-        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1713448963/banners/eboaqialykdngbfugeov.png",
+        "https://res.cloudinary.com/dftvxcvfw/image/upload/v1718374334/banners/champu_dop0vr.png",
       link: "/category/higiene",
     },
     // {
@@ -46,24 +46,23 @@ export  function SectionCategories() {
     // },
   ];
 
-
-
   return (
     <>
-      <section className="w-full py-12">
-        <div className="container grid gap-6 md:gap-8 px-4 md:px-6 max-w-xl mx-auto lg:max-w-none">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-            <div className="grid gap-1">
-              <h1 className="text-2xl font-bold tracking-tight">
-                Categorías Destacadas
-              </h1>
-              <p className="text-gray-500 dark:text-gray-400">
+      <section className="w-full py-10 md:py-20 lg:py-28">
+        <div className="container grid gap-8 px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tight ">
+                Categorías destacadas
+              </h2>
+              <p className="max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 Encuentra lo que buscas en nuestras categorías.
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {categories.map((category, i) => (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+         
+          {categories.map((category, i) => (
               <div
                 className="grid grid-cols-1 flex-1 gap-6 relative group"
                 key={i}
@@ -73,14 +72,18 @@ export  function SectionCategories() {
                 </Link>
                 <Image
                   alt={category.title}
-                  className="rounded-lg object-contain w-full aspect-[3/4]"
-                  height={600}
+                  className="rounded-lg h-52 object-contain w-full aspect-[3/4]"
+                  height={300}
                   src={category.image}
-                  width={450}
+                  width={225} // Reducir el ancho
                 />
                 <div className="grid gap-1">
-                  <h3 className="font-semibold">{category.title}</h3>
-                  <p className="text-sm leading-none">{category.description}</p>
+                  <h3 className="text-base font-semibold">{category.title}</h3>{" "}
+                
+                  <p className="text-xs leading-none">
+                    {category.description}
+                  </p>{" "}
+      
                 </div>
                 <Link href={category.link}>
                   <Button className="bg-primario w-full">Ver Categoría</Button>
