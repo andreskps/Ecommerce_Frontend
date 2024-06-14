@@ -53,6 +53,7 @@ export default function RootLayout({
             src={`https://www.facebook.com/tr?id=393021893749837&ev=PageView&noscript=1`}
           />
         </noscript>
+        <meta name="facebook-domain-verification" content="evyk931uelskvwcrxuysuspu719b2z" />
         </head>
         
         <body className={inter.className}>
