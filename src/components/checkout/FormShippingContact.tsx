@@ -1,7 +1,13 @@
-import React from 'react'
-import { Label } from '../ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Input } from '../ui/input'
+import React from "react";
+import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Input } from "../ui/input";
 import {
   Form,
   FormField,
@@ -11,18 +17,18 @@ import {
   FormControl,
   FormDescription,
 } from "@/components/ui/form";
-import { UseFormReturn } from 'react-hook-form';
-import { z } from 'zod';
-import { ShippingInfo } from '@/validators/shippingInfoSchema';
+import { UseFormReturn } from "react-hook-form";
+import { z } from "zod";
+import { ShippingInfo } from "@/validators/shippingInfoSchema";
 
 interface Props {
   form: UseFormReturn<z.infer<typeof ShippingInfo>>;
 }
 
-export const FormShippingContact = ({form}:Props) => {
+export const FormShippingContact = ({ form }: Props) => {
   return (
-     <>
-        <div className="space-y-2">
+    <>
+      <div className="space-y-2">
         <h2 className="text-2xl font-bold">Información de contacto</h2>
         <p className="text-gray-500 dark:text-gray-400">
           Ingresa tus datos de contacto para completar tu pedido.
@@ -39,7 +45,14 @@ export const FormShippingContact = ({form}:Props) => {
                   Email
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Ingresa tu email" {...field} />
+                  <Input
+                    placeholder="Ingresa tu email"
+                    {...field}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.trim();
+                      field.onChange(e);
+                    }}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -112,6 +125,6 @@ export const FormShippingContact = ({form}:Props) => {
           />
         </form>
       </Form>
-     </>
-  )
-}
+    </>
+  );
+};
